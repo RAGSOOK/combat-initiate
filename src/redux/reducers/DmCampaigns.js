@@ -1,6 +1,6 @@
 const DMCampaigns = (state = [], action) => {
     switch (action.type) {
-      case 'SET_CAMPAIGNS':
+      case 'SET_DM_CAMPAIGNS':
         return action.payload;
       default:
         return state;
