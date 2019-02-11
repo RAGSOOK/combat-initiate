@@ -14,10 +14,11 @@ class CampaignSpecs extends Component{
     }
 
     handleSubmit = (event) => {
+        console.log('Submitting');
         event.preventDefault();
-        // const action = {type: 'SEND_ITEM',
-        //                 payload: this.state};
-        // this.props.dispatch(action);
+        const action = {type: 'CREATE_CAMPAIGN',
+                        payload: this.state};
+        this.props.dispatch(action)
     }
 
     handleChange = (event) => {
@@ -55,7 +56,7 @@ class CampaignSpecs extends Component{
     render(){
         console.log(this.state);
         return(
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} type='text' 
                     placeholder='Campaign Name' name='name'/>
 

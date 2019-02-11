@@ -42,7 +42,29 @@ router.get('/pc', (req, res) => {
  * POST route template
  */
 router.post('/', (req, res) => {
-
+    console.log(req.body);
+    const queryText = `INSERT INTO "campaigns" ("name", "user_id")
+                       VALUES ($1, $2);`;
+    pool.query(queryText, [ req.body.name, req.user.id ] )
+    .then((response) => {
+        res.sendStatus(201);
+    }).catch((error) => {
+        console.log(error);
+        res.sendStatus(500);
+    });
 });
+
+// router.post('/players', (req, res) => {
+//     console.log(req.body);
+//     const queryText = `INSERT INTO "users_campaigns" ("user_id", "campaign_id")
+//                         VALUES ($1, $2);`;
+//     pool.query(queryText, [ req.body.name, req.user.id ] )
+//     .then((response) => {
+//         res.sendStatus(201);
+//     }).catch((error) => {
+//         console.log(error);
+//         res.sendStatus(500);
+//     });
+// });
 
 module.exports = router;
