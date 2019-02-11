@@ -6,7 +6,7 @@ class CampaignSpecs extends Component{
         super(props);
         this.state = {
             name: '',
-            players: ['asdf'],
+            players: [''],
         }
 
         this.handleAddPlayer = this.handleAddPlayer.bind(this);
@@ -41,12 +41,12 @@ class CampaignSpecs extends Component{
         });
     };
 
-    handlePlayerNameChange = i => event => {
+    handlePlayerNameChange = (i, event) => {
         console.log(i);
         console.log(event.target.value);
         const newPlayers = this.state.players.map((player, j) => {
           if (i !== j) return player;
-          return [ ...player, event.target.value ];
+          return event.target.value;
         });
     
         this.setState({ players: newPlayers });
@@ -64,7 +64,7 @@ class CampaignSpecs extends Component{
                 {this.state.players.map((player, i) => (
                     <div>
                         <input type="text" placeholder={`Player #${i + 1} name`}
-                            onChange={ this.handlePlayerNameChange.bind(this, i) }/>
+                            value={player||''} onChange={ this.handlePlayerNameChange.bind(this, i) }/>
                         <button type="button" onClick={ this.handleRemovePlayer.bind(this, i) }>
                         -
                         </button>
