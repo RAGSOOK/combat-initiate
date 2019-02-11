@@ -20,7 +20,7 @@ function* fetchCampaigns() {
 }
 
 function* campaignSaga() {
-  yield takeLatest('FETCH_CAMPAIGNS', fetchCampaigns);
+  yield takeEvery('FETCH_CAMPAIGNS', fetchCampaigns);
 }
 
-export default userSaga;
+export default campaignSaga;
