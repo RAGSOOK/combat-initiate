@@ -14,7 +14,6 @@ class CampaignSpecs extends Component{
     }
 
     handleSubmit = (event) => {
-        console.log('Submitting');
         event.preventDefault();
         const action = {type: 'CREATE_CAMPAIGN',
                         payload: this.state};
@@ -26,8 +25,6 @@ class CampaignSpecs extends Component{
     }
 
     handleAddPlayer = () => {
-        console.log('in add');
-        console.log(this.state);
         this.setState({
           players: [...this.state.players, ''],
         });

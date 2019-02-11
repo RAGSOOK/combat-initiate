@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
                        VALUES ($1, $2);`;
     pool.query(queryText, [ req.body.name, req.user.id ] )
     .then((response) => {
-        res.sendStatus(201);
+        res.sendStaus(201);
     }).catch((error) => {
         console.log(error);
         res.sendStatus(500);

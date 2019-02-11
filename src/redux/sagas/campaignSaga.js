@@ -22,13 +22,10 @@ function* fetchCampaigns() {
 
 function* createCampaign(action) {
   try{
-    console.log('create campaign saga');
     yield axios.post('api/campaign', action.payload);
 
     const nextAction = { type: 'FETCH_CAMPAIGNS' };
     yield put(nextAction);
-
-    yield put({ type: 'ADD_PLAYERS_TO_CAMPAIGN', payload: action.payload});
   } catch (error) {
       console.log('There is error in POST Campaign', error);
   }

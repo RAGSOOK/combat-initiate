@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CampaignSpecs from '../../CampaignSpecs/CampaignSpecs';
+import DMCampaigns from './DMCampaigns/DMCampaigns.js';
 
 class MyCampaigns extends Component{
 
@@ -12,11 +13,11 @@ class MyCampaigns extends Component{
         return(
             <div>
                 <h4>As DM</h4>
-                {JSON.stringify(this.props.reduxStore.DMCampaigns)} 
+                <DMCampaigns />
                 <h4>As a Player</h4>
                 {JSON.stringify(this.props.reduxStore.PCCampaigns)} 
 
-                <CampaignSpecs />
+                <button>Create New Campaign</button>
             </div>
         );
     }
