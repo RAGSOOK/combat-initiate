@@ -6,7 +6,7 @@ class CampaignSpecs extends Component{
         super(props);
         this.state = {
             name: '',
-            players: [''],
+            players: [],
         }
 
         this.handleAddPlayer = this.handleAddPlayer.bind(this);

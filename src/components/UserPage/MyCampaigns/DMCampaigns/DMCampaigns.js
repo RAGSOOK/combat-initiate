@@ -5,11 +5,10 @@ import CampaignTableItem from './CampaignTableItem.js';
 class DMCampaigns extends Component{
     
     render(){
-        console.log(this.state);
         return(
             <table>
                 <thead>
-                    <tr> <th>Name</th> </tr>
+                    <tr><th>Name</th></tr>
                 </thead>
                 <tbody>
                     {this.props.reduxStore.DMCampaigns.map((campaign, i) => {

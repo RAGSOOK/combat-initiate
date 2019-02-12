@@ -13,7 +13,7 @@ const UserPage = (props) => (
     </h1>
     <p>Your ID is: {props.user.id}</p>
     <h3>Your Campaigns</h3>
-    <MyCampaigns />
+    <MyCampaigns history={props.history}/>
 
     <LogOutButton className="log-in" />
   </div>

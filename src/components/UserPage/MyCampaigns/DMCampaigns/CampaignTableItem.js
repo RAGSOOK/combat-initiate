@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class CampaignTableItem extends Component {
-    constructor(props){
-        super(props);
 
+    handleAddPlayer = () => {
+        const id = this.props.campaign.id;
+    }
+
+    handleDelete =() => {
+        const id = this.props.campaign.id;
+        
     }
 
     render() {
