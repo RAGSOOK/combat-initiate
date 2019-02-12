@@ -112,6 +112,8 @@ router.delete('/:id', (req, res) => {
                 const camp_user_id = selResponse.rows[0].user_id;
 
                 //checks that the user trying to delete has ownership
+                // this may not be necessary as a user can only see it 
+                // if it's theirs
                 if(req.user.id = camp_user_id){
 
                     //delete dependent rows from junction table
@@ -146,6 +148,8 @@ router.delete('/:id', (req, res) => {
     }
 });
 
+// Deletes a row from the users-campaigns table
+// effectively removing a player from a campaign
 router.delete('/player/:id', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `DELETE FROM "users_campaigns"
