@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 class PCCampaignTableItem extends Component {
 
     handleLeave = () => {
-        const id = this.props.campaign.id;
+        console.log(this.props.campaign);
+        const action = {
+            type: 'LEAVE_CAMPAIGN',
+            payload: this.props.campaign.id,
+          }
+        this.props.dispatch(action);
     }
 
     handleJoinSession =() => {

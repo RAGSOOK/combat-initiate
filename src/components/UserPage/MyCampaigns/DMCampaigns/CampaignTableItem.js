@@ -12,7 +12,6 @@ class CampaignTableItem extends Component {
     }
 
     handleDelete = () => {
-        console.log('trying to delete campaign:',this.props.campaign);
         const action = {
             type: 'DELETE_CAMPAIGN',
             payload: this.props.campaign,

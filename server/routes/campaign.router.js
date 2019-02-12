@@ -25,7 +25,7 @@ router.get('/dm', (req, res) => {
 // GETs campaigns as player
 router.get('/pc', (req, res) => {
     if(req.isAuthenticated()){
-        const queryText = `SELECT campaigns.name FROM "campaigns"
+        const queryText = `SELECT campaigns.name, campaigns.id FROM "campaigns"
                            JOIN users_campaigns ON campaign_id=campaigns.id
                            WHERE "users_campaigns"."user_id" = $1;`;
         pool.query(queryText, [req.user.id] )
@@ -139,6 +139,23 @@ router.delete('/:id', (req, res) => {
             }
         })().catch((error) => {
             console.log('CATCH', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
+});
+
+router.delete('/player/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `DELETE FROM "users_campaigns"
+                           WHERE "user_id" = $1
+                           AND "campaign_id" = $2;`;
+        pool.query(queryText, [req.user.id, req.params.id] )
+        .then((result) => {
+            res.sendStatus(200);
+        }).catch((error) => {
+            console.log('error in delete player from campaign', error);
             res.sendStatus(500);
         });
     }else{

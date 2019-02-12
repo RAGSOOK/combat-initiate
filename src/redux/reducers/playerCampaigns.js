@@ -6,7 +6,5 @@ const PCCampaigns = (state = [], action) => {
         return state;
     }
   };
-
-// loginMode will be on the redux state at:
-// state.loginMode
+  
   export default PCCampaigns;
