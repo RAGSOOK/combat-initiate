@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 class CampaignTableItem extends Component {
 
     handleEdit = () => {
-        const id = this.props.campaign.id;
         const action = {
                         type: 'SET_EDIT_CAMPAIGN',
                         payload: this.props.campaign,
@@ -13,8 +12,12 @@ class CampaignTableItem extends Component {
     }
 
     handleDelete = () => {
-        const id = this.props.campaign.id;
-        
+        console.log('trying to delete campaign:',this.props.campaign);
+        const action = {
+            type: 'DELETE_CAMPAIGN',
+            payload: this.props.campaign,
+          }
+        this.props.dispatch(action);
     }
 
     handleJoinSession = () => {

@@ -5,6 +5,7 @@ const router = express.Router();
 /**
  * GET route template
  */
+// GETs campaigns as DM
 router.get('/dm', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `SELECT * FROM "campaigns"
@@ -21,6 +22,7 @@ router.get('/dm', (req, res) => {
     }
 });
 
+// GETs campaigns as player
 router.get('/pc', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `SELECT campaigns.name FROM "campaigns"
@@ -47,44 +49,101 @@ router.get('/pc', (req, res) => {
 // and creates records in the campaigns and 
 // users_campaigns tables
 router.post('/', (req, res) => {
-    console.log(req.body);
+    console.log('post new campaign', req.body);
+    if(req.isAuthenticated()){
+        (async () => {
+            const client = await pool.connect();
 
-    (async () => {
-        const client = await pool.connect();
+            try{
+                await client.query('BEGIN');
+                //Create the campaign
+                let queryText = `INSERT INTO "campaigns" ("name", "user_id")
+                                VALUES ($1, $2) RETURNING "id";`;
+                const values = [ req.body.name, req.user.id ];
+                const campResult = await client.query(queryText, values);
 
-        try{
-            await client.query('BEGIN');
-            let queryText = `INSERT INTO "campaigns" ("name", "user_id")
-                             VALUES ($1, $2) RETURNING "id";`;
-            const values = [ req.body.name, req.user.id ];
-            const campResult = await client.query(queryText, values);
+                //get id of new campaign
+                const campId = campResult.rows[0].id;
+                let playerId;
 
-            const campId = campResult.rows[0].id;
-            let playerId;
+                //loop through players and add each to the junction table with this campaign
+                for(let player of req.body.players){
+                    queryText = `SELECT * FROM person 
+                                WHERE username = $1;`;
+                    const playerResult = await client.query(queryText, [player]);
+                    playerId = playerResult.rows[0].id;
 
-            for(let player of req.body.players){
-                queryText = `SELECT * FROM person 
-                             WHERE username = $1;`;
-                const playerResult = await client.query(queryText, [player]);
-                playerId = playerResult.rows[0].id;
-
-                queryText = `INSERT INTO "users_campaigns" ("user_id", "campaign_id")
-                             VALUES ($1, $2);`;
-                const result = await client.query(queryText, [playerId, campId]);
+                    queryText = `INSERT INTO "users_campaigns" ("user_id", "campaign_id")
+                                VALUES ($1, $2);`;
+                    await client.query(queryText, [playerId, campId]);
+                }
+                await client.query('COMMIT');
+                res.sendStatus(201);
+            }catch (error) {
+                console.log('Rollback', error);
+                await client.query('ROLLBACK');
+                throw error;
+            }finally {
+                client.release();
             }
-            await client.query('COMMIT');
-            res.sendStatus(201);
-        }catch (error) {
-            console.log('Rollback', error);
-            await client.query('ROLLBACK');
-            throw error;
-        }finally {
-            client.release();
-        }
-    })().catch((error) => {
-        console.log('CATCH', error);
-        res.sendStatus(500);
-    });
+        })().catch((error) => {
+            console.log('CATCH', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
+});
+
+// Deletes a Campaign
+// First needs to check that the user trying to delete has ownership of campaign
+// then needs to delete any rows in junction table that depend on it
+router.delete('/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        (async () => {
+            const client = await pool.connect();
+
+            try{
+                await client.query('BEGIN');
+                // Get the user id of the campaign to be deleted
+                let queryText = `SELECT user_id FROM campaigns
+                                 WHERE id = $1;`;
+                const selResponse = await client.query(queryText, [req.params.id]);
+                const camp_user_id = selResponse.rows[0].user_id;
+
+                //checks that the user trying to delete has ownership
+                if(req.user.id = camp_user_id){
+
+                    //delete dependent rows from junction table
+                    queryText = `DELETE FROM users_campaigns
+                                    WHERE campaign_id = $1;`;
+                    await client.query(queryText, [req.params.id]);
+
+                    //delete campaign row itself
+                    queryText = `DELETE FROM campaigns
+                                WHERE id = $1;`;
+                    await client.query(queryText, [req.params.id]);
+
+                    await client.query('COMMIT');
+                    res.sendStatus(200);
+                }else{
+                    res.sendStatus(403);
+                }
+
+            }catch (error) {
+                console.log('Rollback', error);
+                await client.query('ROLLBACK');
+                throw error;
+            }finally {
+                client.release();
+            }
+        })().catch((error) => {
+            console.log('CATCH', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
 });
 
  

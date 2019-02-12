@@ -39,10 +39,22 @@ function* addPlayersToCampaign(action){
   }
 }
 
+function* deleteCampaign(action){
+  try{
+    yield axios.delete(`api/campaign/${action.payload.id}`);
+
+    const nextAction = { type: 'FETCH_CAMPAIGNS' };
+    yield put(nextAction);
+  }catch(error){
+    console.log('Error in campaign Delete', error);
+  }
+}
+
 function* campaignSaga() {
   yield takeEvery('FETCH_CAMPAIGNS', fetchCampaigns);
   yield takeEvery('CREATE_CAMPAIGN', createCampaign);
   yield takeEvery('ADD_PLAYERS_TO_CAMPAIGN', addPlayersToCampaign);
+  yield takeEvery('DELETE_CAMPAIGN', deleteCampaign);
 }
 
 export default campaignSaga;

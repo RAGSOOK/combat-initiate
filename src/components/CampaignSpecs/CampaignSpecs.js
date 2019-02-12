@@ -18,6 +18,7 @@ class CampaignSpecs extends Component{
         const action = {type: 'CREATE_CAMPAIGN',
                         payload: this.state};
         this.props.dispatch(action)
+        this.props.history.push('/home');
     }
 
     handleChange = (event) => {
