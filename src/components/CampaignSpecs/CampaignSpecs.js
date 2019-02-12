@@ -5,7 +5,7 @@ class CampaignSpecs extends Component{
     constructor(props){
         super(props);
         this.state = {
-            name: this.props.reduxStore.DMCReducers.EditCampaign.name||'',
+            name: '',
             players: [],
         }
 
@@ -55,7 +55,6 @@ class CampaignSpecs extends Component{
         return(
             <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} type='text' 
-                    value={this.props.reduxStore.DMCReducers.EditCampaign.name||''} 
                     placeholder='Campaign Name' name='name'/>
 
                 <h4>Players</h4>
