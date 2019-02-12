@@ -11,7 +11,7 @@ class DMCampaigns extends Component{
                     <tr><th>Name</th></tr>
                 </thead>
                 <tbody>
-                    {this.props.reduxStore.DMCampaigns.map((campaign, i) => {
+                    {this.props.reduxStore.DMCReducers.DMCampaigns.map((campaign, i) => {
                             return (<CampaignTableItem key={i} campaign={campaign} />);
                     })}
                 </tbody>
