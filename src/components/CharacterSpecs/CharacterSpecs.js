@@ -11,41 +11,54 @@ class CharacterSpecs extends Component{
     }
 
     // if props updates while on page /edit-character
-    // componentDidUpdate(prevProps, prevState) {
-    //     if(this.props.location.pathname === '/edit-character'){
-    //         const prevPlayers = prevProps.reduxStore.PlayersReducers.CurrentPlayers;
-    //         const players = this.props.reduxStore.PlayersReducers.CurrentPlayers;
-    //         if (players.length !== 0 && prevPlayers !== players) {
-    //             const playerArray = this.props.reduxStore.PlayersReducers.CurrentPlayers
-    //             .map((player, i) => ( player.username ));
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.location.pathname === '/edit-character'){
+            const prevChar = prevProps.reduxStore.characterReducer.editCharacter;
+            const character = this.props.reduxStore.characterReducer.editCharacter;
+            if (character !== {} && prevChar !== character) {
+                const oldName = this.props.reduxStore.characterReducer.editCharacter.name
 
-    //             this.setState({
-    //                 name: this.props.reduxStore.DMCReducers.EditCampaign.name,
-    //                 players: playerArray,
-    //             });
-    //         }
-    //     }
-    // }
+                this.setState({
+                    name: oldName
+                });
+                console.log(this.state);
+            }
+        }
+    }
+
+    componentDidMount = () => {
+        if(this.props.location.pathname === '/edit-character'){
+            const character = this.props.reduxStore.characterReducer.editCharacter;
+            if (character !== {}) {
+                const oldName = this.props.reduxStore.characterReducer.editCharacter.name
+
+                this.setState({
+                    name: oldName
+                });
+                console.log(this.state);
+            }
+        }
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
 
-        // if(this.props.location.pathname === '/edit-campaign'){
-        //     const action = {type: 'EDIT_CAMPAIGN',
-        //                     payload: {newName: this.state.name,
-        //                               newPlayers: this.state.players,
-        //                               campaignId: this.props.reduxStore.DMCReducers.EditCampaign.id,
-        //                             }
-        //                    };
-        //     this.props.dispatch(action)
-        //     this.props.history.push('/home');
+        if(this.props.location.pathname === '/edit-character'){
+            const action = {type: 'EDIT_CHARACTER',
+                            payload: {newName: this.state.name,
+                                      charId: this.props.reduxStore.characterReducer.editCharacter.id,
+                                      userId: this.props.reduxStore.characterReducer.editCharacter.user_id,
+                                    }
+                           };
+            this.props.dispatch(action)
+            this.props.history.push('/home');
 
-        // } else{
+        } else{
         const action = {type: 'CREATE_CHARACTER',
                         payload: this.state};
         this.props.dispatch(action)
         this.props.history.push('/home');
-        // }
+        }
     }
 
     handleChange = (event) => {

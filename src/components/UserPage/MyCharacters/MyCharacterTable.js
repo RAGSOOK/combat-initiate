@@ -12,7 +12,8 @@ class MyCharacterTable extends Component{
                 </thead>
                 <tbody>
                     {this.props.reduxStore.characterReducer.playerCharacters.map((character, i) => {
-                            return (<CharacterTableItem key={i} character={character} />);
+                            return (<CharacterTableItem key={i} character={character} 
+                                                        history={this.props.history}/>);
                     })}
                 </tbody>
             </table>

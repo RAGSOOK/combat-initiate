@@ -22,10 +22,21 @@ function* addCharacter(action) {
   }
 }
 
+function* editCharacter(action){
+  try{
+    yield axios.put(`api/character/${action.payload.charId}`, action.payload);
+
+    const nextAction = { type: 'FETCH_CHARACTERS' };
+    yield put(nextAction);
+  }catch (error){
+    console.log('There is error in PUT Edit Character', error);
+  }
+}
 
 function* characterSaga() {
   yield takeEvery('FETCH_CHARACTERS', fetchCharacters);
   yield takeEvery('CREATE_CHARACTER', addCharacter);
+  yield takeEvery('EDIT_CHARACTER', editCharacter);
 }
 
 export default characterSaga;

@@ -242,7 +242,7 @@ router.put('/:id', (req, res) => {
     }else{
         res.sendStatus(403);
     }
-})
+});
 
  
 
