@@ -7,6 +7,7 @@ const router = express.Router();
  */
 // GETs players for campaign
 router.get('/:id', (req, res) => {
+    console.log('in get players by campaign id route');
     if(req.isAuthenticated()){
         const queryText = `SELECT person.username, person.id FROM person
                             JOIN users_campaigns ON users_campaigns.user_id = person.id

@@ -2,9 +2,10 @@ import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
 
-function* fetchPlayers() {
+function* fetchPlayers(action) {
   try {
-    const response = yield axios.get(`api/players/${action.payload}`);
+      console.log('in fetch player saga with ', action.payload);
+    const response = yield axios.get(`api/player/${action.payload}`);
 
     yield put({ type: 'SET_CURRENT_PLAYERS', payload: response.data });
 

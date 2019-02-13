@@ -49,20 +49,26 @@ router.get('/pc', (req, res) => {
 // and creates records in the campaigns and 
 // users_campaigns tables
 router.post('/', (req, res) => {
-    console.log('post new campaign', req.body);
+
     if(req.isAuthenticated()){
-        (async () => {
+        (async () => {//wraps around everything we want to 'await'
+
+            //opens a connection until it's closed later
             const client = await pool.connect();
 
             try{
+                //SQL thing, tells where to ROLLBACK to
                 await client.query('BEGIN');
                 //Create the campaign
                 let queryText = `INSERT INTO "campaigns" ("name", "user_id")
                                 VALUES ($1, $2) RETURNING "id";`;
+                
                 const values = [ req.body.name, req.user.id ];
+
+                //returns created row id
                 const campResult = await client.query(queryText, values);
 
-                //get id of new campaign
+                //get id of new campaign row
                 const campId = campResult.rows[0].id;
                 let playerId;
 
@@ -77,6 +83,8 @@ router.post('/', (req, res) => {
                                 VALUES ($1, $2);`;
                     await client.query(queryText, [playerId, campId]);
                 }
+
+                //once you hit this you can't ROLLBACK
                 await client.query('COMMIT');
                 res.sendStatus(201);
             }catch (error) {

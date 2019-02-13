@@ -13,12 +13,19 @@ class CampaignSpecs extends Component{
 
     }
 
-    componentDidMount = () => {
+    componentDidUpdate(prevProps, prevState) {
         if(this.props.location.pathname === '/edit-campaign'){
-            this.setState({
-                name: this.props.reduxStore.DMCReducers.EditCampaign.name,
-                players: this.props.reduxStore.PlayersReducers.CurrentPlayers,
-            });
+            const prevPlayers = prevProps.reduxStore.PlayersReducers.CurrentPlayers;
+            const players = this.props.reduxStore.PlayersReducers.CurrentPlayers;
+            if (players.length !== 0 && prevPlayers !== players) {
+                const playerArray = this.props.reduxStore.PlayersReducers.CurrentPlayers
+                .map((player, i) => ( player.username ));
+
+                this.setState({
+                    name: this.props.reduxStore.DMCReducers.EditCampaign.name,
+                    players: playerArray,
+                });
+            }
         }
     }
 
@@ -56,6 +63,7 @@ class CampaignSpecs extends Component{
         });
         this.setState({ players: newPlayers });
     }
+
 
     render(){
         console.log(this.state);
