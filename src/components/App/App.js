@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 
 import './App.css';
 import CampaignSpecs from '../CampaignSpecs/CampaignSpecs';
+import CharacterSpecs from '../CharacterSpecs/CharacterSpecs.js';
 
 class App extends Component {
   componentDidMount () {
@@ -67,6 +68,18 @@ class App extends Component {
               exact
               path="/edit-campaign"
               component={CampaignSpecs}
+            />
+            {/* When Create Character button is clicked */}
+            <ProtectedRoute
+              exact
+              path="/add-character"
+              component={CharacterSpecs}
+            />
+            {/* When Edit Character button is clicked */}
+            <ProtectedRoute
+              exact
+              path="/edit-character"
+              component={CharacterSpecs}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

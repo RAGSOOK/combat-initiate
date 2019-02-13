@@ -13,7 +13,7 @@ class PCCampaignTableItem extends Component {
     }
 
     handleJoinSession =() => {
-        const id = this.props.campaign.id;
+        // const id = this.props.campaign.id;
         
     }
 

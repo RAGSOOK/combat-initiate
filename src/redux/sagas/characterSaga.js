@@ -4,7 +4,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 
 function* fetchCharacters(action) {
   try {
-      console.log('in fetch charactrer saga');
     const response = yield axios.get(`api/character`);
 
     yield put({ type: 'SET_PLAYER_CHARACTERS', payload: response.data });
@@ -14,10 +13,19 @@ function* fetchCharacters(action) {
   }
 }
 
+function* addCharacter(action) {
+  try{
+    yield axios.post(`api/character`, action.payload);
+
+  }catch (error){
+    console.log('error in add character saga', error);
+  }
+}
+
 
 function* characterSaga() {
   yield takeEvery('FETCH_CHARACTERS', fetchCharacters);
-
+  yield takeEvery('CREATE_CHARACTER', addCharacter);
 }
 
 export default characterSaga;

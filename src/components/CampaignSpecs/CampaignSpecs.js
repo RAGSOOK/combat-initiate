@@ -70,8 +70,6 @@ class CampaignSpecs extends Component{
     };
 
     handlePlayerNameChange = (i, event) => {
-        console.log(i);
-        console.log(event.target.value);
         const newPlayers = this.state.players.map((player, j) => {
           if (i !== j) return player;
           return event.target.value;
@@ -81,7 +79,6 @@ class CampaignSpecs extends Component{
 
 
     render(){
-        console.log(this.state);
         return(
             <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} type='text' 

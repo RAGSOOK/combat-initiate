@@ -7,7 +7,6 @@ const router = express.Router();
  */
 // GETs characters for id
 router.get('/', (req, res) => {
-    console.log('in get characters route');
     if(req.isAuthenticated()){
         const queryText = `SELECT * FROM characters
                             WHERE user_id = $1;`;
@@ -22,5 +21,21 @@ router.get('/', (req, res) => {
         res.sendStatus(403);
     }
 }); 
+
+router.post('/', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `INSERT INTO characters ("name", "user_id")
+                           VALUES ($1, $2);`;
+        pool.query(queryText, [req.body.name, req.user.id])
+        .then((result) => {
+            res.sendStatus(201);
+        }).catch((error) => {
+            console.log('Error in post character', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
+});
 
 module.exports = router;

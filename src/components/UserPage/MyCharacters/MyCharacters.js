@@ -9,7 +9,7 @@ class MyCharacters extends Component{
     }
 
     handleAddCharacter = () => {
-
+        this.props.history.push('/add-character');
     }
 
     render(){
