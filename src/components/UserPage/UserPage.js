@@ -67,11 +67,11 @@ class UserPage extends Component {
           Welcome, { this.props.user.username }!
         </h1>
         <p>Your ID is: {this.props.user.id}</p>
-
+        <hr />
         {this.renderCampaigns()}
-        <br />
+        <hr />
         {this.renderCharacters()}
-        <br />
+        <hr />
         <LogOutButton className="log-in" />
       </div>
     );
