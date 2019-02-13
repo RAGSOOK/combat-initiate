@@ -56,9 +56,16 @@ class App extends Component {
               path="/info"
               component={InfoPage}
             />
+            {/* When Create Campaign button is clicked */}
             <ProtectedRoute
               exact
               path="/add-campaign"
+              component={CampaignSpecs}
+            />
+            {/* When Edit campaign button is clicked */}
+            <ProtectedRoute
+              exact
+              path="/edit-campaign"
               component={CampaignSpecs}
             />
             {/* If none of the other routes matched, we will show a 404. */}

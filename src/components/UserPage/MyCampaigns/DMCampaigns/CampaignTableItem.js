@@ -5,10 +5,16 @@ class CampaignTableItem extends Component {
 
     handleEdit = () => {
         const action = {
-                        type: 'SET_EDIT_CAMPAIGN',
-                        payload: this.props.campaign,
-                      }
+            type: 'SET_EDIT_CAMPAIGN',
+            payload: this.props.campaign,
+          }
         this.props.dispatch(action);
+        const nextAction = {
+            type: 'GET_CURRENT_PLAYERS',
+            payload: this.props.campaign.id,
+        }
+        this.props.dispatch(nextAction);
+        this.props.history.push('/edit-campaign');
     }
 
     handleDelete = () => {

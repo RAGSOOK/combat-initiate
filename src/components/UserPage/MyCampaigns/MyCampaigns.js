@@ -23,7 +23,7 @@ class MyCampaigns extends Component{
         return(
             <div>
                 <h4>As DM</h4>
-                <DMCampaigns />
+                <DMCampaigns history={this.props.history}/>
                 <hr />
                 <h4>As a Player</h4>
                 <PCCampaigns /> 

@@ -13,6 +13,15 @@ class CampaignSpecs extends Component{
 
     }
 
+    componentDidMount = () => {
+        if(this.props.location.pathname === '/edit-campaign'){
+            this.setState({
+                name: this.props.reduxStore.DMCReducers.EditCampaign.name,
+                players: this.props.reduxStore.PlayersReducers.CurrentPlayers,
+            });
+        }
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
         const action = {type: 'CREATE_CAMPAIGN',
@@ -32,9 +41,7 @@ class CampaignSpecs extends Component{
       };
     
     handleRemovePlayer = (i) => {
-
         const newPlayers = this.state.players.filter( (player, j) => i !== j);
-
         this.setState({
             players: newPlayers,
         });
@@ -47,7 +54,6 @@ class CampaignSpecs extends Component{
           if (i !== j) return player;
           return event.target.value;
         });
-    
         this.setState({ players: newPlayers });
     }
 
@@ -56,7 +62,7 @@ class CampaignSpecs extends Component{
         return(
             <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} type='text' 
-                    placeholder='Campaign Name' name='name'/>
+                    value={this.state.name||''} placeholder='Campaign Name' name='name'/>
 
                 <h4>Players</h4>
 
