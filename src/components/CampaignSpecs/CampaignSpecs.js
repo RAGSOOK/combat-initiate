@@ -13,6 +13,8 @@ class CampaignSpecs extends Component{
 
     }
 
+    // if props updates while on page /edit-campaign
+    // state.players is updated to contain players in CurrentPlayers Reducer
     componentDidUpdate(prevProps, prevState) {
         if(this.props.location.pathname === '/edit-campaign'){
             const prevPlayers = prevProps.reduxStore.PlayersReducers.CurrentPlayers;
@@ -31,10 +33,23 @@ class CampaignSpecs extends Component{
 
     handleSubmit = (event) => {
         event.preventDefault();
+
+        if(this.props.location.pathname === '/edit-campaign'){
+            const action = {type: 'EDIT_CAMPAIGN',
+                            payload: {newName: this.state.name,
+                                      newPlayers: this.state.players,
+                                      campaignId: this.props.reduxStore.DMCReducers.EditCampaign.id,
+                                    }
+                           };
+            this.props.dispatch(action)
+            this.props.history.push('/home');
+
+        } else{
         const action = {type: 'CREATE_CAMPAIGN',
                         payload: this.state};
         this.props.dispatch(action)
         this.props.history.push('/home');
+        }
     }
 
     handleChange = (event) => {

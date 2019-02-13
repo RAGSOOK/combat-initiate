@@ -30,11 +30,14 @@ function* createCampaign(action) {
   }
 }
 
-function* addPlayersToCampaign(action){
+function* editCampaign(action){
   try{
-    yield
+    yield axios.put(`api/campaign/${action.payload.campaignId}`, action.payload);
+
+    const nextAction = { type: 'FETCH_CAMPAIGNS' };
+    yield put(nextAction);
   }catch (error){
-    console.log('There is error in POST Add players to Campaign', error);
+    console.log('There is error in PUT Edit Campaign', error);
   }
 }
 
@@ -64,7 +67,7 @@ function* leaveCampaign(action){
 function* campaignSaga() {
   yield takeEvery('FETCH_CAMPAIGNS', fetchCampaigns);
   yield takeEvery('CREATE_CAMPAIGN', createCampaign);
-  yield takeEvery('ADD_PLAYERS_TO_CAMPAIGN', addPlayersToCampaign);
+  yield takeEvery('EDIT_CAMPAIGN', editCampaign);
   yield takeEvery('DELETE_CAMPAIGN', deleteCampaign);
   yield takeEvery('LEAVE_CAMPAIGN', leaveCampaign);
 }
