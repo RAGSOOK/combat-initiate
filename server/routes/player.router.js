@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
         .then((result) => {
             res.send(result.rows);
         }).catch((error) => {
-            console.log('error in get dm campaign', error);
+            console.log('error in get players', error);
             res.sendStatus(500);
         });
     }else{
