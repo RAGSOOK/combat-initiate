@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import MyCharacterTable from './MyCharacterTable.js';
 
 class MyCharacters extends Component{
 
@@ -7,10 +8,17 @@ class MyCharacters extends Component{
         this.props.dispatch({ type: 'FETCH_CHARACTERS'});
     }
 
+    handleAddCharacter = () => {
+
+    }
+
     render(){
         return(
             <div>
-
+                <h4>Your Characters</h4>
+                <MyCharacterTable /> 
+                <hr />
+                <button onClick={this.handleAddCharacter}>Create New Character</button>
             </div>
         );
     }
