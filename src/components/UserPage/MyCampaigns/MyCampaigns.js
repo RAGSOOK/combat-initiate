@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CampaignSpecs from '../../CampaignSpecs/CampaignSpecs';
 import DMCampaigns from './DMCampaigns/DMCampaigns.js';
 import PCCampaigns from './PCCampaigns/PCCmpaignTable.js';
 
@@ -22,6 +21,7 @@ class MyCampaigns extends Component{
     render(){
         return(
             <div>
+                <h2>Your Campaigns</h2>
                 <h4>As DM</h4>
                 <DMCampaigns history={this.props.history}/>
                 <hr />
