@@ -43,6 +43,8 @@ class CampaignSpecs extends Component{
                            };
             this.props.dispatch(action)
             this.props.history.push('/home');
+            //unset the edit campaign with an empty object
+            this.props.dispatch({type: 'SET_EDIT_CAMPAIGN', payload: {}});
 
         } else{
         const action = {type: 'CREATE_CAMPAIGN',

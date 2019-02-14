@@ -52,6 +52,8 @@ class CharacterSpecs extends Component{
                            };
             this.props.dispatch(action)
             this.props.history.push('/home');
+            //unset the edit character with an empty object
+            this.props.dispatch({type: 'SET_EDIT_CHARACTER', payload: {}});
 
         } else{
         const action = {type: 'CREATE_CHARACTER',
