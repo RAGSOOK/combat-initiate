@@ -18,9 +18,19 @@ const DMCampaigns = (state = [], action) => {
     }
   };
 
+const joinSessionDM = (state = {}, action) => {
+  switch(action.type) {
+    case 'SET_DM_SESSION_CAMPAIGN':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 // loginMode will be on the redux state at:
 // state.loginMode
   export default combineReducers({
     DMCampaigns,
     EditCampaign,
+    joinSessionDM,
   });

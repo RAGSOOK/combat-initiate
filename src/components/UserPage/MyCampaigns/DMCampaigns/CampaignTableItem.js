@@ -26,7 +26,9 @@ class CampaignTableItem extends Component {
     }
 
     handleJoinSession = () => {
-
+        const action = {type: 'SET_DM_SESSION_CAMPAIGN',
+                        payload: this.props.campaign}
+        this.props.dispatch(action);
     }
 
     render() {
