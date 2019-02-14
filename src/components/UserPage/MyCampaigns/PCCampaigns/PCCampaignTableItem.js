@@ -13,8 +13,9 @@ class PCCampaignTableItem extends Component {
     }
 
     handleJoinSession =() => {
-        // const id = this.props.campaign.id;
-        
+        const action = {type: 'SET_SESSION_CAMPAIGN',
+                        payload: this.props.campaign}
+        this.props.dispatch(action);
     }
 
     render() {

@@ -25,7 +25,7 @@ router.get('/dm', (req, res) => {
 // GETs campaigns as player
 router.get('/pc', (req, res) => {
     if(req.isAuthenticated()){
-        const queryText = `SELECT campaigns.name, campaigns.id FROM "campaigns"
+        const queryText = `SELECT * FROM "campaigns"
                            JOIN users_campaigns ON campaign_id=campaigns.id
                            WHERE "users_campaigns"."user_id" = $1;`;
         pool.query(queryText, [req.user.id] )

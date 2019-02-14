@@ -18,9 +18,13 @@ const DMCampaigns = (state = [], action) => {
     }
   };
 
+
+  ////////////////////////////////
+  ///This may be better somewhere else///
+  ////////////////////////////////
 const joinSessionDM = (state = {}, action) => {
   switch(action.type) {
-    case 'SET_DM_SESSION_CAMPAIGN':
+    case 'SET_SESSION_CAMPAIGN':
       return action.payload;
     default:
       return state;
