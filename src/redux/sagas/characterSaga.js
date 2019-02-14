@@ -9,7 +9,7 @@ function* fetchCharacters(action) {
     yield put({ type: 'SET_PLAYER_CHARACTERS', payload: response.data });
 
   } catch (error) {
-    console.log('CHaracter get request failed', error);
+    console.log('Character get request failed', error);
   }
 }
 
