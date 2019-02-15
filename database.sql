@@ -30,20 +30,17 @@ CREATE TABLE monsters (
 
 
 CREATE TABLE users_campaigns (
-	"id" SERIAL PRIMARY KEY,
 	"user_id" INT NOT NULL REFERENCES "person",
     "campaign_id" INT NOT NULL REFERENCES "campaigns"
 );
 
 CREATE TABLE campaigns_encounters (
-	"id" SERIAL PRIMARY KEY,
 	"campaign_id" INT NOT NULL REFERENCES "campaigns",
 	"encounter_id" INT NOT NULL REFERENCES "encounters",
 	"notes" TEXT
 );
 
 CREATE TABLE encounters_monsters (
-	"id" SERIAL PRIMARY KEY,
 	"monster_id" INT NOT NULL REFERENCES "monsters",
 	"encounter_id" INT NOT NULL REFERENCES "encounters"
 );
