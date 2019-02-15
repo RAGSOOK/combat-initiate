@@ -12,7 +12,8 @@ class PCCampaigns extends Component{
                 </thead>
                 <tbody>
                     {this.props.reduxStore.PCCampaigns.map((campaign, i) => {
-                            return (<PCCampaignTableItem key={i} campaign={campaign} />);
+                            return (<PCCampaignTableItem key={i} campaign={campaign} 
+                                                         history={this.props.history}/>);
                     })}
                 </tbody>
             </table>

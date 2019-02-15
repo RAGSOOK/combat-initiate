@@ -26,7 +26,7 @@ class MyCampaigns extends Component{
                 <DMCampaigns history={this.props.history}/>
                 <hr />
                 <h4>As a Player</h4>
-                <PCCampaigns /> 
+                <PCCampaigns history={this.props.history}/> 
                 <hr />
                 <button onClick={this.handleAddCampaign}>Create New Campaign</button>
             </div>
