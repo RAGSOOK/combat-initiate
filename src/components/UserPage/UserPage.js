@@ -50,7 +50,8 @@ class UserPage extends Component {
       return (
         <div>
           <button onClick={this.charSwitch}>Hide Characters</button>
-          <MyCharacters history={this.props.history}/>
+          <MyCharacters history={this.props.history}
+                        location={this.props.location}/>
         </div>
       );
     }else{

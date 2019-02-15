@@ -16,6 +16,7 @@ class PCCampaignTableItem extends Component {
         const action = {type: 'SET_SESSION_CAMPAIGN',
                         payload: this.props.campaign}
         this.props.dispatch(action);
+        this.props.history.push('/select-character')
     }
 
     render() {

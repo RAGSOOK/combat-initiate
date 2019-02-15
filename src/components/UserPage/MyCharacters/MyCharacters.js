@@ -16,7 +16,8 @@ class MyCharacters extends Component{
         return(
             <div>
                 <h4>Your Characters</h4>
-                <MyCharacterTable history={this.props.history}/> 
+                <MyCharacterTable history={this.props.history}
+                                  location={this.props.location}/> 
                 <hr />
                 <button onClick={this.handleAddCharacter}>Create New Character</button>
             </div>

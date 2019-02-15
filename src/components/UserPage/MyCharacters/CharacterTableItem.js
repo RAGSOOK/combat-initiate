@@ -3,6 +3,28 @@ import { connect } from 'react-redux';
 
 class CharacterTableItem extends Component {
 
+    buttonConditional = () => {
+        if(this.props.location.pathname === '/select-character'){
+            return (
+                <td><button onClick={this.handleSelect}>Select</button></td>
+            );
+        }else{
+            return(
+                <td><button onClick={this.handleEdit}>Edit Character</button></td>
+            );
+        }
+    }
+
+    handleSelect = () => {
+        const action = {
+            type: 'SET_SESSION_CHARACTER',
+            payload: this.props.character,
+            }
+        this.props.dispatch(action);
+
+        this.props.history.push('/session');
+    }
+
     handleEdit = () => {
         const action = {
             type: 'SET_EDIT_CHARACTER',
@@ -17,7 +39,7 @@ class CharacterTableItem extends Component {
         return (
             <tr>
                 <td>{this.props.character.name}</td>
-                <td><button onClick={this.handleEdit}>Edit Character</button></td>
+                {this.buttonConditional()}
             </tr>
         );
     }

@@ -20,6 +20,8 @@ import InfoPage from '../InfoPage/InfoPage';
 import './App.css';
 import CampaignSpecs from '../CampaignSpecs/CampaignSpecs';
 import CharacterSpecs from '../CharacterSpecs/CharacterSpecs.js';
+import SessionPC from '../UserPage/MyCampaigns/PCCampaigns/SessionPC/SessionPC.js';
+import SessionPage from '../SessionPage/SessionPage';
 
 class App extends Component {
   componentDidMount () {
@@ -80,6 +82,16 @@ class App extends Component {
               exact
               path="/edit-character"
               component={CharacterSpecs}
+            />
+            {/* When A Player joins a session */}
+            <ProtectedRoute
+              exact
+              path="/select-character"
+              component={SessionPC}
+            />
+            <ProtectedRoute
+              exact path="/session"
+              component={SessionPage}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

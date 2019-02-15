@@ -18,7 +18,17 @@ const editCharacter = (state={}, action) => {
   }
 }
 
+const sessionCharacter = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_SESSION_CHARACTER':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
   export default combineReducers({
     playerCharacters,
     editCharacter,
+    sessionCharacter,
   });
