@@ -4,16 +4,35 @@ import { connect } from 'react-redux';
 // import MyCharacterTable fromu './../UserPage/MyCharacters/MyCharacterTable.js';
 import SessionEncounters from './SessionEncounters/SessionEncounters.js';
 
+//import socket and set server port
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:5000');
+
 class SessionPage extends Component{
     constructor(props){
         super(props);
         this.state= {
-                     test: 'test'
+                     test: '',
+                     timestamp: 'no timestamp',
                     }
+
+    }
+
+    subscribeToTest = (cb) => {
+        socket.on('test', test => cb(null, test));
+        socket.emit('subscribeToTest', this.state.test);
     }
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
+        console.log(this.state.test);
+    }
+
+    emitTest = () => {
+        this.subscribeToTest((error, test) => this.setState({
+            test
+        }));
+        console.log(this.state.test);
     }
 
     dmPcConditonal = () => {
@@ -42,6 +61,7 @@ class SessionPage extends Component{
                 {this.dmPcConditonal()}
                 <input onChange={this.handleChange} type='text' 
                     value={this.state.test||''} placeholder='Test Town!' name='test'/> 
+                <button onClick={this.emitTest}>send to emitter</button>
             </div>
         );
     }

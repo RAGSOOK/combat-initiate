@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 const bodyParser = require('body-parser');
 const sessionMiddleware = require('./modules/session-middleware');
-// const io = require('socket.io')();
+const socket = require('socket.io');
 
 const passport = require('./strategies/user.strategy');
 
@@ -14,6 +14,7 @@ const userRouter = require('./routes/user.router');
 const campaignRouter = require('./routes/campaign.router.js');
 const playerRouter = require('./routes/player.router.js');
 const characterRouter = require('./routes/character.router.js');
+const sessionRouter = require('./routes/session.router.js');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use('/api/user', userRouter);
 app.use('/api/campaign', campaignRouter);
 app.use('/api/player', playerRouter);
 app.use('/api/character', characterRouter);
+app.use('/session', sessionRouter);
 
 // Serve static files
 app.use(express.static('build'));
@@ -39,6 +41,36 @@ app.use(express.static('build'));
 const PORT = process.env.PORT || 5000;
 
 /** Listen * */
-app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
+
+//socket.io
+let io = socket(server);
+
+io.on('connection', function(socket){
+  console.log( "Nice work buddy! A user connected.");
+
+  socket.on('subscribeToTimer', (interval) => {
+    console.log('client is subscribing to timer with interval ', interval);
+    setInterval(() => {
+      socket.emit('timer', new Date());
+    }, interval);
+  });
+
+  socket.on('subscribeToTest', (test) => {
+    console.log('client is subscribing to test', test);
+
+    socket.emit('test', test);
+  });
+
+});
+
+// io.on('connection', function(socket){
+//   socket.on('emitName', function(name){
+//     console.log('Name: ' + name);
+//     io.emit('emitName', name);
+//   });
+// });
+
+
