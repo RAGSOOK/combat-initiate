@@ -3,10 +3,16 @@ import { connect } from 'react-redux';
 import MyCharacterTable from '../../../MyCharacters/MyCharacterTable.js';
 
 class SessionPC extends Component{
+
+    componentDidMount = () => {
+        this.props.dispatch({ type: 'FETCH_CHARACTERS'});
+    }
+    
     render(){
         return(
             <div>
-                <MyCharacterTable />
+                <MyCharacterTable history={this.props.history}
+                                  location={this.props.location}/>
             </div>
         );
     }
