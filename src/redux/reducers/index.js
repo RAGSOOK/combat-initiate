@@ -6,6 +6,7 @@ import DMCReducers from './DmCampaigns';
 import PCCampaigns from './playerCampaigns';
 import PlayersReducers from './PlayersReducers.js';
 import characterReducer from './characterReducer.js';
+import DmCampaigns from './DmCampaigns.js';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   PCCampaigns,
   PlayersReducers,
   characterReducer,
+  DmCampaigns,
 });
 
 export default rootReducer;

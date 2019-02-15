@@ -7,17 +7,20 @@ import SessionEncounters from './SessionEncounters/SessionEncounters.js';
 class SessionPage extends Component{
 
     dmPcConditonal = () => {
-        if(this.props.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
+        if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.id){
             return(
                 <div>
-                    <MyCharacterTable />
+                    <p>are you the DM</p>
+                    {/* <MyCharacterTable /> */}
                     <SessionEncounters />
                 </div>
             );
         }
         else{
             return(
-                <div></div>
+                <div>
+                    <p>Your character is {this.props.reduxStore.characterReducer.sessionCharacter.name}</p>
+                </div>
             );
         }
     }
