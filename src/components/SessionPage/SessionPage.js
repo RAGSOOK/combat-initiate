@@ -18,6 +18,15 @@ class SessionPage extends Component{
 
     }
 
+    componentDidMount = () => {
+        this.emitTest();
+    }
+
+    componentWillUnmount = () => {
+        socket.removeAllListeners('test');
+        socket.removeAllListeners('subscribeToTest');
+    }
+
     subscribeToTest = (cb) => {
         socket.on('test', test => cb(null, test));
         socket.emit('subscribeToTest', this.state.test);
@@ -25,14 +34,12 @@ class SessionPage extends Component{
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-        console.log(this.state.test);
     }
 
     emitTest = () => {
         this.subscribeToTest((error, test) => this.setState({
             test
         }));
-        console.log(this.state.test);
     }
 
     dmPcConditonal = () => {

@@ -61,7 +61,7 @@ io.on('connection', function(socket){
   socket.on('subscribeToTest', (test) => {
     console.log('client is subscribing to test', test);
 
-    socket.emit('test', test);
+    io.sockets.emit('test', test);
   });
 
 });
