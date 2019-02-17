@@ -90,7 +90,7 @@ class App extends Component {
               component={SessionPC}
             />
             <ProtectedRoute
-              exact path="/session"
+              path="/session/:id"
               component={SessionPage}
             />
             {/* If none of the other routes matched, we will show a 404. */}

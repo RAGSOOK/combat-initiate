@@ -51,6 +51,18 @@ let io = socket(server);
 io.on('connection', function(socket){
   console.log( "Nice work buddy! A user connected.");
 
+  socket.on('room', function(data) {
+    socket.join(data.room);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  socket.on('leave room', function(data) {
+    socket.leave(data.room);
+  });
+
   socket.on('subscribeToTest', (test) => {
     console.log('client is subscribing to test', test);
 

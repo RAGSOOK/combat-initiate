@@ -29,7 +29,7 @@ class CampaignTableItem extends Component {
         const action = {type: 'SET_SESSION_CAMPAIGN',
                         payload: this.props.campaign}
         this.props.dispatch(action);
-        this.props.history.push('/session');
+        this.props.history.push(`/session/${this.props.campaign.id}`);
     }
 
     render() {

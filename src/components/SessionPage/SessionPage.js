@@ -5,31 +5,49 @@ import { connect } from 'react-redux';
 import SessionEncounters from './SessionEncounters/SessionEncounters.js';
 
 //import socket and set server port
-import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:5000');
+// import { openSocket, io } from 'socket.io-client';
+// const socket = openSocket('http://localhost:5000');
+const io = require('socket.io-client');
+const socket = io();
 
 class SessionPage extends Component{
     constructor(props){
         super(props);
         this.state= {
                      test: '',
-                     timestamp: 'no timestamp',
+                     character: '',
+                     characters: [],
                     }
-
+        socket.on('new user join', (users) => this.joinUser(users))
+        socket.on('load users and code', () => this.sendUsersAndCode())
+        socket.on('receive users and code', (payload) => this.updateUsersAndCodeInState(payload))
+        socket.on('user left room', (user) => this.removeUser(user))
+        
     }
 
     componentDidMount = () => {
-        this.emitTest();
+        if (this.props.reduxStore.DmCampaigns.joinSessionDM.id == undefined) {
+            alert('Session Campaign not yet set');
+        } else {
+            const character = this.props.reduxStore.characterReducer.sessionCharacter.name;
+            const characters = [...this.state.characters, character]
+            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+                                character: character});
+            this.setState({characters: characters});
+        }
     }
+
+    componentWillReceiveProps(nextProps) {
+        const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
+        const characters = [...this.state.characters, character]
+        socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+                            character: character});
+        this.setState({characters: characters});
+      }
 
     componentWillUnmount = () => {
-        socket.removeAllListeners('test');
-        socket.removeAllListeners('subscribeToTest');
-    }
-
-    subscribeToTest = (cb) => {
-        socket.on('test', test => cb(null, test));
-        socket.emit('subscribeToTest', this.state.test);
+        socket.emit('leave room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id, 
+                                   character: this.props.reduxStore.characterReducer.sessionCharacter.name});
     }
 
     handleChange = (event) => {

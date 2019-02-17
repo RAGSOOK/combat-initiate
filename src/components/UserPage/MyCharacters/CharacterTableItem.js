@@ -22,7 +22,7 @@ class CharacterTableItem extends Component {
             }
         this.props.dispatch(action);
 
-        this.props.history.push('/session');
+        this.props.history.push(`/session/${this.props.reduxStore.DmCampaigns.joinSessionDM.user_id}`);
     }
 
     handleEdit = () => {
@@ -45,4 +45,6 @@ class CharacterTableItem extends Component {
     }
 }
 
-export default connect()(CharacterTableItem);
+const mapStateToProps = reduxStore => ({ reduxStore: reduxStore });
+
+export default connect(mapStateToProps)(CharacterTableItem);
