@@ -51,13 +51,6 @@ let io = socket(server);
 io.on('connection', function(socket){
   console.log( "Nice work buddy! A user connected.");
 
-  socket.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      socket.emit('timer', new Date());
-    }, interval);
-  });
-
   socket.on('subscribeToTest', (test) => {
     console.log('client is subscribing to test', test);
 
