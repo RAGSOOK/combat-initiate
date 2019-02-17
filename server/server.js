@@ -65,19 +65,12 @@ io.on('connection', function(socket){
     console.log('someone left room', data.room);
   });
 
-  socket.on('subscribeToTest', (test) => {
-    console.log('client is subscribing to test', test);
+  // socket.on('subscribeToTest', (test) => {
+  //   console.log('client is subscribing to test', test);
 
-    io.sockets.emit('test', test);
-  });
+  //   io.sockets.emit('test', test);
+  // });
 
 });
-
-// io.on('connection', function(socket){
-//   socket.on('emitName', function(name){
-//     console.log('Name: ' + name);
-//     io.emit('emitName', name);
-//   });
-// });
 
 

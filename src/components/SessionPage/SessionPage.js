@@ -19,7 +19,7 @@ class SessionPage extends Component{
                      characters: [],
                      inCombat: false,
                     }
-        //example to follow for sockets
+        //example to follow for sockets, these will receive from server
         // socket.on('user left room', (user) => this.removeUser(user))
         
     }
