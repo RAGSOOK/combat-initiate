@@ -17,15 +17,15 @@ class SessionPage extends Component{
                      test: '',
                      character: '',
                      characters: [],
+                     inCombat: false,
                     }
-        socket.on('new user join', (users) => this.joinUser(users))
-        socket.on('load users and code', () => this.sendUsersAndCode())
-        socket.on('receive users and code', (payload) => this.updateUsersAndCodeInState(payload))
-        socket.on('user left room', (user) => this.removeUser(user))
+        //example to follow for sockets
+        // socket.on('user left room', (user) => this.removeUser(user))
         
     }
 
     componentDidMount = () => {
+        //alerts user if cmapaign not set in reducer
         if (this.props.reduxStore.DmCampaigns.joinSessionDM.id == undefined) {
             alert('Session Campaign not yet set');
         } else {
@@ -37,6 +37,8 @@ class SessionPage extends Component{
         }
     }
 
+    //if campaign reducer updates after user is already on page
+    //this basically follows the happy path for DidMount
     componentWillReceiveProps(nextProps) {
         const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
         const characters = [...this.state.characters, character]
@@ -45,6 +47,7 @@ class SessionPage extends Component{
         this.setState({characters: characters});
       }
 
+    //disconnect from socket
     componentWillUnmount = () => {
         socket.emit('leave room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id, 
                                    character: this.props.reduxStore.characterReducer.sessionCharacter.name});
@@ -60,6 +63,8 @@ class SessionPage extends Component{
         }));
     }
 
+
+    ////Stuff that renders
     dmPcConditonal = () => {
         if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
             return(
@@ -84,9 +89,6 @@ class SessionPage extends Component{
             <div>
                 <h2>{this.props.reduxStore.DmCampaigns.joinSessionDM.name}</h2>
                 {this.dmPcConditonal()}
-                <input onChange={this.handleChange} type='text' 
-                    value={this.state.test||''} placeholder='Test Town!' name='test'/> 
-                <button onClick={this.emitTest}>send to emitter</button>
             </div>
         );
     }

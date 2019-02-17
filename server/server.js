@@ -53,6 +53,7 @@ io.on('connection', function(socket){
 
   socket.on('room', function(data) {
     socket.join(data.room);
+    console.log('someone joined room',data.room);
   });
 
   socket.on('disconnect', () => {
@@ -61,6 +62,7 @@ io.on('connection', function(socket){
 
   socket.on('leave room', function(data) {
     socket.leave(data.room);
+    console.log('someone left room', data.room);
   });
 
   socket.on('subscribeToTest', (test) => {
