@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import MyCampaigns from './MyCampaigns/MyCampaigns.js';
 import MyCharacters from './MyCharacters/MyCharacters.js';
+import MyEncounters from './MyEncounters/MyEncounters.js';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -28,6 +29,12 @@ class UserPage extends Component {
   charSwitch = () => {
     this.setState(prevState => ({
       showChar: !prevState.showChar
+    }));
+  }
+
+  encSwitch = () => {
+    this.setState(prevState => ({
+      showEnc: !prevState.showEnc
     }));
   }
 
@@ -63,17 +70,17 @@ class UserPage extends Component {
   }
 
   renderEncounters = () => {
-    if(this.state.showChar){
+    if(this.state.showEnc){
       return (
         <div>
-          <button onClick={this.charSwitch}>Hide Characters</button>
-          <MyCharacters history={this.props.history}
+          <button onClick={this.encSwitch}>Hide Encounters</button>
+          <MyEncounters history={this.props.history}
                         location={this.props.location}/>
         </div>
       );
     }else{
       return(
-        <button onClick={this.charSwitch}>Show Characters</button>
+        <button onClick={this.encSwitch}>Show Encounters</button>
       );
     }
   }
@@ -89,6 +96,8 @@ class UserPage extends Component {
         {this.renderCampaigns()}
         <hr />
         {this.renderCharacters()}
+        <hr />
+        {this.renderEncounters()}
         <hr />
         <LogOutButton className="log-in" />
       </div>
