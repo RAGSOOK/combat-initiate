@@ -42,5 +42,6 @@ CREATE TABLE campaigns_encounters (
 
 CREATE TABLE encounters_monsters (
 	"monster_id" INT NOT NULL REFERENCES "monsters",
-	"encounter_id" INT NOT NULL REFERENCES "encounters"
+	"encounter_id" INT NOT NULL REFERENCES "encounters",
+	"quantity" INT NOT NULL
 );
