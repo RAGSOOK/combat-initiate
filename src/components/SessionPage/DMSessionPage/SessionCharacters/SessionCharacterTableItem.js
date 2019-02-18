@@ -6,7 +6,7 @@ class SessionCharacterTableItem extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.character.name}</td>
+                <td>{this.props.character}</td>
                 {/* A button here later to display more stats on the character */}
             </tr>
         );

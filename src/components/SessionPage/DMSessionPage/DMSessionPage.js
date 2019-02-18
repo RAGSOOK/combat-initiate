@@ -6,7 +6,10 @@ class DMSessionPage extends Component{
     render(){
         return(
             <div>
+                <h3>Current Player Characters</h3>
                 <SessionCharacters characters={this.props.characters}/>
+                <hr />
+                <h3>Encounters for this campaign</h3>
                 <SessionEncounters />
             </div>
         );
