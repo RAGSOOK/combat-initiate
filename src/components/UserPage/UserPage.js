@@ -4,6 +4,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import MyCampaigns from './MyCampaigns/MyCampaigns.js';
 import MyCharacters from './MyCharacters/MyCharacters.js';
 import MyEncounters from './MyEncounters/MyEncounters.js';
+import MyMonsters from './MyMonsters/MyMonsters.js';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -17,6 +18,7 @@ class UserPage extends Component {
                   showCamp: false,
                   showChar: false,
                   showEnc: false,
+                  showMon: false,
                 };
   }
 
@@ -35,6 +37,12 @@ class UserPage extends Component {
   encSwitch = () => {
     this.setState(prevState => ({
       showEnc: !prevState.showEnc
+    }));
+  }
+
+  monSwitch = () => {
+    this.setState(prevState => ({
+      showMon: !prevState.showMon
     }));
   }
 
@@ -85,6 +93,22 @@ class UserPage extends Component {
     }
   }
 
+  renderMonsters = () => {
+    if(this.state.showMon){
+      return (
+        <div>
+          <button onClick={this.monSwitch}>Hide Monsters</button>
+          <MyMonsters history={this.props.history}
+                        location={this.props.location}/>
+        </div>
+      );
+    }else{
+      return(
+        <button onClick={this.monSwitch}>Show Monsters</button>
+      );
+    }
+  }
+
   render(){
     return(
       <div>
@@ -98,6 +122,8 @@ class UserPage extends Component {
         {this.renderCharacters()}
         <hr />
         {this.renderEncounters()}
+        <hr />
+        {this.renderMonsters()}
         <hr />
         <LogOutButton className="log-in" />
       </div>

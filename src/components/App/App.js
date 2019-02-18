@@ -21,6 +21,7 @@ import './App.css';
 import CampaignSpecs from '../CampaignSpecs/CampaignSpecs';
 import CharacterSpecs from '../CharacterSpecs/CharacterSpecs.js';
 import EncounterSpecs from '../EncounterSpecs/EncounterSpecs.js';
+import MonsterSpecs from '../MonsterSpecs/MonsterSpecs.js';
 import SessionPC from '../UserPage/MyCampaigns/PCCampaigns/SessionPC/SessionPC.js';
 import SessionPage from '../SessionPage/SessionPage';
 
@@ -101,6 +102,18 @@ class App extends Component {
               exact
               path="/edit-encounter"
               component={EncounterSpecs}
+            />
+            {/* When add monster is clicked */}
+            <ProtectedRoute
+              exact
+              path="/add-monster"
+              component={MonsterSpecs}
+            />
+            {/* When Edit monster button is clicked */}
+            <ProtectedRoute
+              exact
+              path="/edit-monster"
+              component={MonsterSpecs}
             />
 
             

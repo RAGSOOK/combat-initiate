@@ -11,7 +11,7 @@ class MyMonsterTable extends Component{
                     <tr><th>Name</th></tr>
                 </thead>
                 <tbody>
-                    {this.props.reduxStore.monstersReducers.myMonsters.map((monster, i) => {
+                    {this.props.reduxStore.monsterReducer.myMonsters.map((monster, i) => {
                             return (<MonsterTableItem key={i} monster={monster} 
                                                         history={this.props.history}
                                                         location={this.props.location}/>);

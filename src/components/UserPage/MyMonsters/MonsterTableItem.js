@@ -5,7 +5,7 @@ class MonsterTableItem extends Component {
 
     buttonConditional = () => {
             return(
-                <td><button onClick={this.handleEdit}>Edit Encounter</button></td>
+                <td><button onClick={this.handleEdit}>Edit Monster</button></td>
             );
     }
 
