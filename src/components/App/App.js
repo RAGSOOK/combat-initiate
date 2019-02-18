@@ -89,8 +89,22 @@ class App extends Component {
               path="/select-character"
               component={SessionPC}
             />
+            {/* When add encounter is clicked */}
+            {/* <ProtectedRoute
+              exact
+              path="/add-encounter"
+              component={EncounterSpecs}
+            /> */}
+            {/* When Edit Encounter button is clicked */}
+            {/* <ProtectedRoute
+              exact
+              path="/edit-encounter"
+              component={EncounterSpecs}
+            /> */}
+
+            
             <ProtectedRoute
-              path="/session/:id"
+              exact path="/session"
               component={SessionPage}
             />
             {/* If none of the other routes matched, we will show a 404. */}

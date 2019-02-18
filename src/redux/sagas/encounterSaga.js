@@ -6,7 +6,7 @@ function* fetchEncounters() {
   try {
     const response = yield axios.get(`api/encounter`);
 
-    yield put({ type: 'SET_ENCOUNTERS', payload: response.data });
+    yield put({ type: 'SET_MY_ENCOUNTERS', payload: response.data });
   } catch (error) {
     console.log('Encounter get request failed', error);
   }

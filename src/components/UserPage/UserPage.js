@@ -15,12 +15,19 @@ class UserPage extends Component {
     this.state = {
                   showCamp: false,
                   showChar: false,
+                  showEnc: false,
                 };
   }
 
   campSwitch = () => {
     this.setState(prevState => ({
       showCamp: !prevState.showCamp
+    }));
+  }
+
+  charSwitch = () => {
+    this.setState(prevState => ({
+      showChar: !prevState.showChar
     }));
   }
 
@@ -39,13 +46,23 @@ class UserPage extends Component {
     }
   }
 
-  charSwitch = () => {
-    this.setState(prevState => ({
-      showChar: !prevState.showChar
-    }));
+  renderCharacters = () => {
+    if(this.state.showChar){
+      return (
+        <div>
+          <button onClick={this.charSwitch}>Hide Characters</button>
+          <MyCharacters history={this.props.history}
+                        location={this.props.location}/>
+        </div>
+      );
+    }else{
+      return(
+        <button onClick={this.charSwitch}>Show Characters</button>
+      );
+    }
   }
 
-  renderCharacters = () => {
+  renderEncounters = () => {
     if(this.state.showChar){
       return (
         <div>
