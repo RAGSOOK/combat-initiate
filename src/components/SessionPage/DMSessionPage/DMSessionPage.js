@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SessionEncounters from './SessionEncounters/SessionEncounters.js';
 import SessionCharacters from './SessionCharacters/SessionCharacters.js';
 
 class DMSessionPage extends Component{
+
+    componentDidMount = () => {
+        this.props.dispatch({ type: 'FETCH_CAMPAIGN_ENCOUNTERS', 
+                              payload: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+                            });
+    }
+
     render(){
         return(
             <div>
@@ -16,4 +24,6 @@ class DMSessionPage extends Component{
     }
 }
 
-export default DMSessionPage;
+const mapStateToProps = (reduxStore) => ({ reduxStore: reduxStore });
+
+export default connect(mapStateToProps)(DMSessionPage);

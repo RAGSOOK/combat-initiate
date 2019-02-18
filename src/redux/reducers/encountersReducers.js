@@ -18,7 +18,17 @@ const myEncounters = (state=[], action) => {
   }
 }
 
+const sessionEncounters = (state=[], action) => {
+  switch (action.type) {
+    case 'SET_SESSION_ENCOUNTERS':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
   export default combineReducers({
     editEncounter,
     myEncounters,
+    sessionEncounters,
   });

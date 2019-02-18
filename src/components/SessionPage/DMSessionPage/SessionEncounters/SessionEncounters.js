@@ -17,7 +17,6 @@ class SessionEncounters extends Component{
         this.setState({
                         encounters: campaignEncounters,
                      });
-        console.log('Session Encounters Did Mount');
     }
     
     render(){

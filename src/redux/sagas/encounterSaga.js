@@ -12,6 +12,16 @@ function* fetchEncounters() {
   }
 }
 
+function* fetchCampaignEncounters(action) {
+  try {
+    const response = yield axios.get(`api/encounter/${action.payload}`);
+
+    yield put({ type: 'SET_SESSION_ENCOUNTERS', payload: response.data });
+  } catch (error) {
+    console.log('Encounter get request failed', error);
+  }
+}
+
 function* createEncounter(action) {
   try{
     yield axios.post('api/encounter', action.payload);
@@ -50,6 +60,7 @@ function* encounterSaga() {
   yield takeEvery('CREATE_ENCOUNTER', createEncounter);
   yield takeEvery('EDIT_ENCOUNTER', editEncounter);
   yield takeEvery('DELETE_ENCOUNTER', deleteEncounter);
+  yield takeEvery('FETCH_CAMPAIGN_ENCOUNTERS', fetchCampaignEncounters);
 }
 
 export default encounterSaga;
