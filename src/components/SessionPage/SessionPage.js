@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import SessionPlayers from './SessionPlayers/SessionPlayers.js';
-// import MyCharacterTable fromu './../UserPage/MyCharacters/MyCharacterTable.js';
-import SessionEncounters from './SessionEncounters/SessionEncounters.js';
+import DMSessionPage from './DMSessionPage/DMSessionPage.js';
 
 //import socket and set server port
 // import { openSocket, io } from 'socket.io-client';
-// const socket = openSocket('http://localhost:5000');
 const io = require('socket.io-client');
 const socket = io();
 
@@ -14,7 +11,6 @@ class SessionPage extends Component{
     constructor(props){
         super(props);
         this.state= {
-                     test: '',
                      character: '',
                      characters: [],
                      inCombat: false,
@@ -26,7 +22,7 @@ class SessionPage extends Component{
 
     componentDidMount = () => {
         //alerts user if cmapaign not set in reducer
-        if (this.props.reduxStore.DmCampaigns.joinSessionDM.id == undefined) {
+        if (this.props.reduxStore.DmCampaigns.joinSessionDM.id === undefined) {
             alert('Session Campaign not yet set');
         } else {
             const character = this.props.reduxStore.characterReducer.sessionCharacter.name;
@@ -51,17 +47,20 @@ class SessionPage extends Component{
     componentWillUnmount = () => {
         socket.emit('leave room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id, 
                                    character: this.props.reduxStore.characterReducer.sessionCharacter.name});
+                                   
+        socket.emit('disconnect');
+        socket.disconnect();
     }
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    emitTest = () => {
-        this.subscribeToTest((error, test) => this.setState({
-            test
-        }));
-    }
+    // emitTest = () => {
+    //     this.subscribeToTest((error, test) => this.setState({
+    //         test
+    //     }));
+    // }
 
 
     ////Stuff that renders
@@ -69,9 +68,9 @@ class SessionPage extends Component{
         if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
             return(
                 <div>
-                    <p>are you the DM</p>
-                    {/* <MyCharacterTable /> */}
-                    <SessionEncounters />
+                    <p>You ARE the DM</p>
+                    <DMSessionPage characters={this.state.characters}
+                                   inCombat={this.state.inCombat}/>
                 </div>
             );
         }
