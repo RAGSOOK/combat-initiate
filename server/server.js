@@ -56,12 +56,12 @@ io.on('connection', function(socket){
     
     console.log('room join', data.character);
     if(data.character != undefined){
-      io.sockets.emit('addCharacter', data.character);
+      socket.broadcast.to(data.room).emit('addCharacter', data.character);
       console.log(data.character,'Joined room',data.room);
     } else{
       console.log('DM joined room',data.room);
     }
-    
+
   });
 
   socket.on('disconnect', () => {

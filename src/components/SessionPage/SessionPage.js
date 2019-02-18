@@ -18,6 +18,7 @@ class SessionPage extends Component{
         //example to follow for sockets, these will receive from server
         // socket.on('user left room', (user) => this.removeUser(user))
         socket.on('addCharacter', (character) => this.addCharacter(character));
+        socket.on('removeCharacter', (character) => this.removeCharacter(character));
         
     }
 
@@ -66,6 +67,15 @@ class SessionPage extends Component{
         const combinedChars = [...this.state.characters, character];
         this.setState({characters: combinedChars});
         console.log(character,'added to state array');
+        console.log(this.state.characters);
+    }
+
+    removeCharacter = (removeCharacter) => {
+        const newCharacters= this.state.characters.filter( (character) => removeCharacter !== character);
+        this.setState({
+            characters: newCharacters,
+        });
+        console.log(removeCharacter,'removed from state array');
         console.log(this.state.characters);
     }
 
