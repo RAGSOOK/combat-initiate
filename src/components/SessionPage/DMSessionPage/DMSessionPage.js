@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import SessionEncounters from '../SessionEncounters/SessionEncounters.js';
+import SessionEncounters from './SessionEncounters/SessionEncounters.js';
+import SessionCharacters from './SessionCharacters/SessionCharacters.js';
 
 class DMSessionPage extends Component{
     render(){
@@ -13,6 +13,4 @@ class DMSessionPage extends Component{
     }
 }
 
-const mapStateToProps = (reduxStore) => ({ reduxStore: reduxStore });
-
-export default connect(mapStateToProps)(DMSessionPage);
+export default DMSessionPage;

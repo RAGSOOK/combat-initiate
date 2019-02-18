@@ -17,6 +17,7 @@ class SessionPage extends Component{
                     }
         //example to follow for sockets, these will receive from server
         // socket.on('user left room', (user) => this.removeUser(user))
+        socket.on('addCharacter', (character) => this.addCharacter(character));
         
     }
 
@@ -24,6 +25,10 @@ class SessionPage extends Component{
         //alerts user if cmapaign not set in reducer
         if (this.props.reduxStore.DmCampaigns.joinSessionDM.id === undefined) {
             alert('Session Campaign not yet set');
+        //else if you are DM
+        } else if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
+            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id});
+        // else you are  player
         } else {
             const character = this.props.reduxStore.characterReducer.sessionCharacter.name;
             const characters = [...this.state.characters, character]
@@ -36,24 +41,32 @@ class SessionPage extends Component{
     //if campaign reducer updates after user is already on page
     //this basically follows the happy path for DidMount
     componentWillReceiveProps(nextProps) {
-        const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
-        const characters = [...this.state.characters, character]
-        socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
-                            character: character});
-        this.setState({characters: characters});
-      }
+        if(this.nextProps.reduxStore.user.id === this.nextProps.reduxStore.DmCampaigns.joinSessionDM.user_id){
+            socket.emit('room', {room: this.nextProps.reduxStore.DmCampaigns.joinSessionDM.id});
+        // else you are  player
+        }else{
+            const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
+            const characters = [...this.state.characters, character]
+            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+                                character: character});
+            this.setState({characters: characters});
+        }
+    }
 
     //disconnect from socket
     componentWillUnmount = () => {
         socket.emit('leave room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id, 
                                    character: this.props.reduxStore.characterReducer.sessionCharacter.name});
                                    
-        socket.emit('disconnect');
-        socket.disconnect();
+        // socket.emit('disconnect');
+        // socket.disconnect();
     }
 
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+    addCharacter = (character) => {
+        const combinedChars = [...this.state.characters, character];
+        this.setState({characters: combinedChars});
+        console.log(character,'added to state array');
+        console.log(this.state.characters);
     }
 
     // emitTest = () => {

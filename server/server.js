@@ -53,7 +53,15 @@ io.on('connection', function(socket){
 
   socket.on('room', function(data) {
     socket.join(data.room);
-    console.log('someone joined room',data.room);
+    
+    console.log('room join', data.character);
+    if(data.character != undefined){
+      io.sockets.emit('addCharacter', data.character);
+      console.log(data.character,'Joined room',data.room);
+    } else{
+      console.log('DM joined room',data.room);
+    }
+    
   });
 
   socket.on('disconnect', () => {
