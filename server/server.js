@@ -15,6 +15,7 @@ const campaignRouter = require('./routes/campaign.router.js');
 const playerRouter = require('./routes/player.router.js');
 const characterRouter = require('./routes/character.router.js');
 const encounterRouter = require('./routes/encounter.router.js');
+const monsterRouter = require('./routes/monster.router.js');
 const sessionRouter = require('./routes/session.router.js');
 
 // Body parser middleware
@@ -34,6 +35,7 @@ app.use('/api/campaign', campaignRouter);
 app.use('/api/player', playerRouter);
 app.use('/api/character', characterRouter);
 app.use('/api/encounter', encounterRouter);
+app.use('/api/monster', monsterRouter);
 app.use('/session', sessionRouter);
 
 // Serve static files
