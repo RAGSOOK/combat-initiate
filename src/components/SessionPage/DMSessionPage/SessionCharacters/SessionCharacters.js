@@ -4,7 +4,6 @@ import SessionCharacterTableItem from './SessionCharacterTableItem.js';
 class MyCharacterTable extends Component{
     
     render(){
-        console.log(this.props.characters,'Session Chatacters.js');
         return(
             <table>
                 <thead>

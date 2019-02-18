@@ -10,7 +10,7 @@ class DMSessionPage extends Component{
                 <SessionCharacters characters={this.props.characters}/>
                 <hr />
                 <h3>Encounters for this campaign</h3>
-                <SessionEncounters />
+                <SessionEncounters location={this.props.location} />
             </div>
         );
     }

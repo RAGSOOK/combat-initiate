@@ -87,7 +87,8 @@ class SessionPage extends Component{
                 <div>
                     <p>You ARE the DM</p>
                     <DMSessionPage characters={this.state.characters}
-                                   inCombat={this.state.inCombat}/>
+                                   inCombat={this.state.inCombat}
+                                   location={this.props.location}/>
                 </div>
             );
         }
