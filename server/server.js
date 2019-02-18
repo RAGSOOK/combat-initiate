@@ -14,6 +14,7 @@ const userRouter = require('./routes/user.router');
 const campaignRouter = require('./routes/campaign.router.js');
 const playerRouter = require('./routes/player.router.js');
 const characterRouter = require('./routes/character.router.js');
+const encounterRouter = require('./routes/encounter.router.js');
 const sessionRouter = require('./routes/session.router.js');
 
 // Body parser middleware
@@ -32,6 +33,7 @@ app.use('/api/user', userRouter);
 app.use('/api/campaign', campaignRouter);
 app.use('/api/player', playerRouter);
 app.use('/api/character', characterRouter);
+app.use('/api/encounter', encounterRouter);
 app.use('/session', sessionRouter);
 
 // Serve static files
@@ -46,6 +48,7 @@ let server = app.listen(PORT, () => {
 });
 
 //socket.io
+// Everything past here is sockets
 let io = socket(server);
 
 io.on('connection', function(socket){
