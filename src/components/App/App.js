@@ -20,6 +20,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import './App.css';
 import CampaignSpecs from '../CampaignSpecs/CampaignSpecs';
 import CharacterSpecs from '../CharacterSpecs/CharacterSpecs.js';
+import EncounterSpecs from '../EncounterSpecs/EncounterSpecs.js';
 import SessionPC from '../UserPage/MyCampaigns/PCCampaigns/SessionPC/SessionPC.js';
 import SessionPage from '../SessionPage/SessionPage';
 
@@ -90,17 +91,17 @@ class App extends Component {
               component={SessionPC}
             />
             {/* When add encounter is clicked */}
-            {/* <ProtectedRoute
+            <ProtectedRoute
               exact
               path="/add-encounter"
               component={EncounterSpecs}
-            /> */}
+            />
             {/* When Edit Encounter button is clicked */}
-            {/* <ProtectedRoute
+            <ProtectedRoute
               exact
               path="/edit-encounter"
               component={EncounterSpecs}
-            /> */}
+            />
 
             
             <ProtectedRoute
