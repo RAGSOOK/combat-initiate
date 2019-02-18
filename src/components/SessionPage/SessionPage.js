@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DMSessionPage from './DMSessionPage/DMSessionPage.js';
+import PCSessionPage from './PCSessionPage/PCSessionPage.js';
 
 //import socket and set server port
 // import { openSocket, io } from 'socket.io-client';
@@ -79,13 +80,6 @@ class SessionPage extends Component{
         console.log(this.state.characters);
     }
 
-    // emitTest = () => {
-    //     this.subscribeToTest((error, test) => this.setState({
-    //         test
-    //     }));
-    // }
-
-
     ////Stuff that renders
     dmPcConditonal = () => {
         if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
@@ -100,7 +94,7 @@ class SessionPage extends Component{
         else{
             return(
                 <div>
-                    <p>Your character is {this.props.reduxStore.characterReducer.sessionCharacter.name}</p>
+                    <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} />
                 </div>
             );
         }

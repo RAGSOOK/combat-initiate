@@ -69,6 +69,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('leave room', function(data) {
+    socket.broadcast.to(data.room).emit('removeCharacter', data.character);
     socket.leave(data.room);
     console.log('someone left room', data.room);
   });
