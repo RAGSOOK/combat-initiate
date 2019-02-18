@@ -5,6 +5,7 @@ import userSaga from './userSaga';
 import campaignSaga from './campaignSaga.js';
 import playerSaga from './playerSaga.js';
 import characterSaga from './characterSaga.js';
+import encounterSaga from './encounterSaga'
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     campaignSaga(),
     playerSaga(),
     characterSaga(),
+    encounterSaga(),
   ]);
 }

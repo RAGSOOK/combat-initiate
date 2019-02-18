@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class SessionEncounters extends Component{
+
+    componentDidMount = () => {
+        
+    }
     
     render(){
         return(
