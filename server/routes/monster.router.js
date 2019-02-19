@@ -5,7 +5,7 @@ const router = express.Router();
 /**
  * GET routes
  */
-// GETs monsters for id
+// GETs monsters for user
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){
         const queryText = `SELECT * FROM monsters
@@ -15,6 +15,25 @@ router.get('/', (req, res) => {
             res.send(result.rows);
         }).catch((error) => {
             console.log('error in get monsters', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
+}); 
+
+//gets monsters for encounter id = :id
+router.get('/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `SELECT "name", "quantity" FROM monsters
+                           JOIN encounters_monsters 
+                           ON encounters_monsters.monster_id = monsters.id
+                           WHERE encounters_monsters.encounter_id = $1;`;
+        pool.query(queryText, [req.params.id] )
+        .then((result) => {
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('error in get monsters by encounter id', error);
             res.sendStatus(500);
         });
     }else{

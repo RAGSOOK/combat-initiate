@@ -45,11 +45,23 @@ function* deleteMonster(action){
   }
 }
 
+function* sessionMonsters(action){
+  try{
+    const response = yield axios.get(`api/monster/${action.payload.id}`);
+
+    const nextAction = { type: 'SET_SESSION_MONSTERS', payload: response.data };
+    yield put(nextAction);
+  }catch(error){
+    console.log('Error in Fetch Session Monsters', error);
+  }
+}
+
 function* monsterSaga() {
   yield takeEvery('FETCH_MONSTERS', fetchMonsters);
   yield takeEvery('CREATE_MONSTER', createMonster);
   yield takeEvery('EDIT_MONSTER', editMonster);
   yield takeEvery('DELETE_MONSTER', deleteMonster);
+  yield takeEvery('FETCH_SESSION_MONSTERS', sessionMonsters);
 }
 
 export default monsterSaga;

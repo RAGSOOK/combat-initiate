@@ -19,12 +19,16 @@ class EncounterTableItem extends Component {
         const action = {
             type: 'SET_SESSION_ENCOUNTER',
             payload: this.props.encounter,
-            }
+        };
         this.props.dispatch(action);
+
+        const nextAction = {
+            type: 'FETCH_SESSION_MONSTERS',
+            payload: this.props.encounter,
+        };
+        this.props.dispatch(nextAction);
         this.props.socket.emit('startEncounter', this.props.encounter);
 
-        // There will need to be somthing here to change this.state.inCombat
-        // on session page
     }
 
     handleEdit = () => {
