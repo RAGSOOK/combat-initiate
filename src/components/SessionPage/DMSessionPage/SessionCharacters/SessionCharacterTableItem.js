@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class SessionCharacterTableItem extends Component {
 
-
     render() {
         return (
             <tr>

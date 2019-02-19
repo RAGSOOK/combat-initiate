@@ -15,6 +15,7 @@ class SessionPage extends Component{
                      character: '',
                      characters: [],
                      inCombat: false,
+                     encounters: [],
                     }
         //example to follow for sockets, these will receive from server
         // socket.on('user left room', (user) => this.removeUser(user))
@@ -42,18 +43,18 @@ class SessionPage extends Component{
 
     //if campaign reducer updates after user is already on page
     //this basically follows the happy path for DidMount
-    componentWillReceiveProps(nextProps) {
-        if(this.nextProps.reduxStore.user.id === this.nextProps.reduxStore.DmCampaigns.joinSessionDM.user_id){
-            socket.emit('room', {room: this.nextProps.reduxStore.DmCampaigns.joinSessionDM.id});
-        // else you are  player
-        }else{
-            const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
-            const characters = [...this.state.characters, character]
-            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
-                                character: character});
-            this.setState({characters: characters});
-        }
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     if(this.nextProps.reduxStore.user.id === this.nextProps.reduxStore.DmCampaigns.joinSessionDM.user_id){
+    //         socket.emit('room', {room: this.nextProps.reduxStore.DmCampaigns.joinSessionDM.id});
+    //     // else you are  player
+    //     }else{
+    //         const character = nextProps.reduxStore.characterReducer.sessionCharacter.name;
+    //         const characters = [...this.state.characters, character]
+    //         socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+    //                             character: character});
+    //         this.setState({characters: characters});
+    //     }
+    // }
 
     //disconnect from socket
     componentWillUnmount = () => {

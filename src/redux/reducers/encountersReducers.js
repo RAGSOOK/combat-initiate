@@ -22,6 +22,8 @@ const sessionEncounters = (state=[], action) => {
   switch (action.type) {
     case 'SET_SESSION_ENCOUNTERS':
       return action.payload;
+    case 'EMPTY_SESSION_ENCOUNTERS':
+      return [];
     default:
       return state;
   }

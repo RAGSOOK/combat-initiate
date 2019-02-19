@@ -11,12 +11,29 @@ class SessionEncounters extends Component{
     }
 
     componentDidMount = () => {
-        const currentCampaign = this.props.reduxStore.DmCampaigns.joinSessionDM;
-        const allEncounters = this.props.reduxStore.encountersReducers.myEncounters;
-        const campaignEncounters = allEncounters.filter( (encounter) => encounter.user_id == currentCampaign.user_id);
+        console.log(this.props.reduxStore.encountersReducers.sessionEncounters);
+        const campaignEncounters = this.props.reduxStore.encountersReducers.sessionEncounters;
         this.setState({
                         encounters: campaignEncounters,
                      });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const prevEncounters = prevProps.reduxStore.encountersReducers.sessionEncounters;
+        const encounters = this.props.reduxStore.encountersReducers.sessionEncounters;
+        if (encounters.length !== 0 && prevEncounters !== encounters) {
+            // const encounterArray = this.props.reduxStore.PlayersReducers.CurrentPlayers
+            // .map((player, i) => ( player.username ));
+
+            this.setState({
+                encounters: encounters,
+            });
+        }
+    }
+
+    componentWillUnmount = () => {
+        this.props.dispatch({type: 'EMPTY_SESSION_ENCOUNTERS'});
+        this.setState({encounters: [] });
     }
     
     render(){

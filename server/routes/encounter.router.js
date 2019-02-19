@@ -22,6 +22,24 @@ router.get('/', (req, res) => {
     }
 }); 
 
+router.get('/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const queryText = `SELECT * FROM encounters
+                            JOIN campaigns_encounters 
+                            ON encounters.id = campaigns_encounters.encounter_id
+                            WHERE campaigns_encounters.campaign_id = $1;`;
+        pool.query(queryText, [req.params.id] )
+        .then((result) => {
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('error in get encounters by campaign id', error);
+            res.sendStatus(500);
+        });
+    }else{
+        res.sendStatus(403);
+    }
+});
+
 // POST
 // INSERTS new character for user
 router.post('/', (req, res) => {
