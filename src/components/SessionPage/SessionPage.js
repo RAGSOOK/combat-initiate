@@ -90,14 +90,19 @@ class SessionPage extends Component{
     ////Stuff that renders
     dmPcConditonal = () => {
         const roomId = this.props.reduxStore.DmCampaigns.joinSessionDM.id;
+        const isDM = (this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id);
+        //if inCombat
         if(this.state.inCombat){
             return(
                 <div>
-                    <CombatPage />
+                    <CombatPage characters={this.state.characters}
+                                socket={socket}
+                                roomId={roomId}
+                                isDM={isDM}/>
                 </div>
             );
         }else{
-            if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
+            if(isDM){
                 return(
                     <div>
                         <p>You ARE the DM</p>

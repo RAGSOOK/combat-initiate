@@ -81,6 +81,12 @@ io.on('connection', function(socket){
     socket.broadcast.to(data.room).emit('prevChars', {character: data.character.name});
   });
 
+  //receives then send list of actors from DM
+  socket.on('sendActors', function(data){
+    io.in(data.room).emit('setActors', {characters: data.characters,
+                                        monsters: data.monsters});
+  });
+
   //sets state on session page for inCombat to true
   socket.on('startEncounter', function(data) {
     io.in(data.room).emit('startCombat', data.encounter);
