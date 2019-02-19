@@ -22,8 +22,6 @@ class SessionEncounters extends Component{
         const prevEncounters = prevProps.reduxStore.encountersReducers.sessionEncounters;
         const encounters = this.props.reduxStore.encountersReducers.sessionEncounters;
         if (encounters.length !== 0 && prevEncounters !== encounters) {
-            // const encounterArray = this.props.reduxStore.PlayersReducers.CurrentPlayers
-            // .map((player, i) => ( player.username ));
 
             this.setState({
                 encounters: encounters,
@@ -47,7 +45,8 @@ class SessionEncounters extends Component{
                     {this.state.encounters.map((encounter, i) => {
                             return (<EncounterTableItem key={i} 
                                                         encounter={encounter} 
-                                                        location={this.props.location}/>);
+                                                        location={this.props.location}
+                                                        socket={this.props.socket}/>);
                     })}
                 </tbody>
             </table>

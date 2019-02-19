@@ -89,14 +89,16 @@ class SessionPage extends Component{
                     <p>You ARE the DM</p>
                     <DMSessionPage characters={this.state.characters}
                                    inCombat={this.state.inCombat}
-                                   location={this.props.location}/>
+                                   location={this.props.location}
+                                   socket={socket}/>
                 </div>
             );
         }
         else{
             return(
                 <div>
-                    <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} />
+                    <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} 
+                                   socket={socket}/>
                 </div>
             );
         }

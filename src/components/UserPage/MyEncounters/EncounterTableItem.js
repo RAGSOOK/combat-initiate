@@ -21,6 +21,7 @@ class EncounterTableItem extends Component {
             payload: this.props.encounter,
             }
         this.props.dispatch(action);
+        this.props.socket.emit('startEncounter', this.props.encounter);
 
         // There will need to be somthing here to change this.state.inCombat
         // on session page
