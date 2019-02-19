@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DMSessionPage from './DMSessionPage/DMSessionPage.js';
 import PCSessionPage from './PCSessionPage/PCSessionPage.js';
+import CombatPage from './CombatPage/CombatPage.js';
 
 //import socket and set server port
 // import { openSocket, io } from 'socket.io-client';
@@ -89,28 +90,35 @@ class SessionPage extends Component{
     ////Stuff that renders
     dmPcConditonal = () => {
         const roomId = this.props.reduxStore.DmCampaigns.joinSessionDM.id;
-
-        if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
+        if(this.state.inCombat){
             return(
                 <div>
-                    <p>You ARE the DM</p>
-                    <DMSessionPage characters={this.state.characters}
-                                   inCombat={this.state.inCombat}
-                                   location={this.props.location}
-                                   socket={socket}
-                                   roomId={roomId}
-                                   addCharacter={this.addCharacter}/>
+                    <CombatPage />
                 </div>
             );
-        }
-        else{
-            return(
-                <div>
-                    <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} 
-                                   socket={socket}
-                                   roomId={roomId}/>
-                </div>
-            );
+        }else{
+            if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
+                return(
+                    <div>
+                        <p>You ARE the DM</p>
+                        <DMSessionPage characters={this.state.characters}
+                                    inCombat={this.state.inCombat}
+                                    location={this.props.location}
+                                    socket={socket}
+                                    roomId={roomId}
+                                    addCharacter={this.addCharacter}/>
+                    </div>
+                );
+            }
+            else{
+                return(
+                    <div>
+                        <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} 
+                                    socket={socket}
+                                    roomId={roomId}/>
+                    </div>
+                );
+            }
         }
     }
 

@@ -4,7 +4,7 @@ class CombatPage extends Component{
     render(){
         return(
             <div>
-                
+                <p>You are on the Combat page</p>
             </div>
         );
     }
