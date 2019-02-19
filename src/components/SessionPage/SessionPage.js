@@ -21,21 +21,24 @@ class SessionPage extends Component{
         // socket.on('user left room', (user) => this.removeUser(user))
         socket.on('addCharacter', (character) => this.addCharacter(character));
         socket.on('removeCharacter', (character) => this.removeCharacter(character));
+        socket.on('startCombat', () => this.startEncounter());
         
     }
 
     componentDidMount = () => {
+        const roomId = this.props.reduxStore.DmCampaigns.joinSessionDM.id;
         //alerts user if cmapaign not set in reducer
-        if (this.props.reduxStore.DmCampaigns.joinSessionDM.id === undefined) {
+        if (roomId === undefined) {
             alert('Session Campaign not yet set');
         //else if you are DM
         } else if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
-            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id});
+            socket.emit('room', {room: roomId});
+            socket.emit('pollRoom', {room: roomId});
         // else you are  player
         } else {
             const character = this.props.reduxStore.characterReducer.sessionCharacter.name;
             const characters = [...this.state.characters, character]
-            socket.emit('room', {room: this.props.reduxStore.DmCampaigns.joinSessionDM.id,
+            socket.emit('room', {room: roomId,
                                 character: character});
             this.setState({characters: characters});
         }
@@ -68,8 +71,6 @@ class SessionPage extends Component{
     addCharacter = (character) => {
         const combinedChars = [...this.state.characters, character];
         this.setState({characters: combinedChars});
-        console.log(character,'added to state array');
-        console.log(this.state.characters);
     }
 
     removeCharacter = (removeCharacter) => {
@@ -78,11 +79,17 @@ class SessionPage extends Component{
             characters: newCharacters,
         });
         console.log(removeCharacter,'removed from state array');
-        console.log(this.state.characters);
+    }
+
+    startEncounter = () => {
+        this.setState({ inCombat: true });
+        console.log(this.state);
     }
 
     ////Stuff that renders
     dmPcConditonal = () => {
+        const roomId = this.props.reduxStore.DmCampaigns.joinSessionDM.id;
+
         if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
             return(
                 <div>
@@ -90,7 +97,9 @@ class SessionPage extends Component{
                     <DMSessionPage characters={this.state.characters}
                                    inCombat={this.state.inCombat}
                                    location={this.props.location}
-                                   socket={socket}/>
+                                   socket={socket}
+                                   roomId={roomId}
+                                   addCharacter={this.addCharacter}/>
                 </div>
             );
         }
@@ -98,7 +107,8 @@ class SessionPage extends Component{
             return(
                 <div>
                     <PCSessionPage character={this.props.reduxStore.characterReducer.sessionCharacter} 
-                                   socket={socket}/>
+                                   socket={socket}
+                                   roomId={roomId}/>
                 </div>
             );
         }

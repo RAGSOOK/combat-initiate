@@ -46,7 +46,8 @@ class SessionEncounters extends Component{
                             return (<EncounterTableItem key={i} 
                                                         encounter={encounter} 
                                                         location={this.props.location}
-                                                        socket={this.props.socket}/>);
+                                                        socket={this.props.socket}
+                                                        roomId={this.props.roomId}/>);
                     })}
                 </tbody>
             </table>

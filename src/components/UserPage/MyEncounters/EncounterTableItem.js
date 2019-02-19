@@ -27,7 +27,10 @@ class EncounterTableItem extends Component {
             payload: this.props.encounter,
         };
         this.props.dispatch(nextAction);
-        this.props.socket.emit('startEncounter', this.props.encounter);
+        
+        const data = {room: this.props.roomId,
+                      encounter: this.props.encounter};
+        this.props.socket.emit('startEncounter', data);
 
     }
 

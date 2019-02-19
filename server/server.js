@@ -59,14 +59,31 @@ io.on('connection', function(socket){
   socket.on('room', function(data) {
     socket.join(data.room);
     
-    console.log('room join', data.character);
+    //if user is player
     if(data.character != undefined){
       socket.broadcast.to(data.room).emit('addCharacter', data.character);
       console.log(data.character,'Joined room',data.room);
+
+    //else user is DM
     } else{
       console.log('DM joined room',data.room);
     }
 
+  });
+
+  //requests all players to re-submit their character
+  socket.on('pollRoom', function(data){
+    socket.broadcast.to(data.room).emit('pollChars');
+  });
+
+  //each re-submitted character is emitted back
+  socket.on('polledChar', function(data){
+    socket.broadcast.to(data.room).emit('prevChars', {character: data.character});
+  });
+
+  //sets state on session page for inCombat to true
+  socket.on('startEncounter', function(data) {
+    io.in(data.room).emit('startCombat', data.encounter);
   });
 
   socket.on('disconnect', () => {
@@ -78,12 +95,6 @@ io.on('connection', function(socket){
     socket.leave(data.room);
     console.log('someone left room', data.room);
   });
-
-  // socket.on('subscribeToTest', (test) => {
-  //   console.log('client is subscribing to test', test);
-
-  //   io.sockets.emit('test', test);
-  // });
 
 });
 
