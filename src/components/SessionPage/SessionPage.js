@@ -30,7 +30,7 @@ class SessionPage extends Component{
         const roomId = this.props.reduxStore.DmCampaigns.joinSessionDM.id;
         //alerts user if cmapaign not set in reducer
         if (roomId === undefined) {
-            alert('Session Campaign not yet set');
+            // alert('Session Campaign not yet set');
         //else if you are DM
         } else if(this.props.reduxStore.user.id === this.props.reduxStore.DmCampaigns.joinSessionDM.user_id){
             socket.emit('room', {room: roomId});

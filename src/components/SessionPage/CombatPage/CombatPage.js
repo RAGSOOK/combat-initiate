@@ -9,18 +9,20 @@ class CombatPage extends Component{
             characters: [],
             monsters: [],
             actors: [],
-            orderSet: false,
+            orderSet: 'false',
         }
 
         this.props.socket.on('setActors', (actors) => this.setActors(actors));
+        this.props.socket.on('actorOrder', (actors) => this.setActorsOrder(actors));
     }
 
     componentDidMount = () => {
         if(this.props.isDM){
             this.props.socket.emit('sendActors', {room: this.props.roomId,
-                                                characters: this.props.characters,
-                                                monsters: this.props.reduxStore.monsterReducer.sessionMonsters});
+                                                  characters: this.props.characters,
+                                                  monsters: this.props.reduxStore.monsterReducer.sessionMonsters});
         }
+        console.log('component did mount state:', this.state);
     }
 
     componentDidUpdate = (prevProps, prevState) => {
@@ -35,27 +37,64 @@ class CombatPage extends Component{
                                                     monsters: this.props.reduxStore.monsterReducer.sessionMonsters});
             }
         }
+        console.log('component did update state:', this.state);
     }
 
     setActors = (actors) => {
         this.setState({
+            ...this.state,
             characters: actors.characters,
             monsters: actors.monsters,
         });
+        console.log('setActors state:', this.state);
     }
 
-    setActorOrder = () => {
+    setActorsOrder = (actors) => {
+        this.setState({
+            ...this.state,
+            actors: actors,
+            orderSet: 'true',
+        });
+        console.log('setActorOrder state:', this.state);
+    }
 
+    setOrder = (actors) => {
+        console.log('CCAAAAALLLLL!EEEEDDDD');
+        this.setState({...this.state,
+                       actors: actors});
+        this.props.socket.emit('sendOrder', {room: this.props.roomId,
+                                             actors: actors});
+        this.setState({...this.state,
+                       orderSet: 'true'});
+        console.log('setOrder state:', this.state);
     }
 
     DmSetsOrder = () => {
+        console.log('DmSetsOrder', this.state);
         //if order isn't set, DM will do so
-        if(this.state.orderSet === false){
+        if(this.state.orderSet === 'false'){
             if(this.props.isDM){
+                console.log('characters', this.props.characters);
+                console.log('monsters', this.props.monsters);
+                let characters = this.props.characters;
+                let monsters = this.props.reduxStore.monsterReducer.sessionMonsters;
+                if(monsters === undefined){
+                    monsters = [];
+                }
+                let actors = [];
+                for(let character of characters){
+                    actors.push(character);
+                    console.log(actors);
+                }
+                for(let monster of monsters){
+                    actors.push(monster);
+                    console.log(actors);
+                }
+
                 return(
-                    <InitiativeTable characters={this.state.characters}
-                                     monsters={this.state.monsters}
-                                     setActorOrder={this.setActorOrder}/>
+                    <InitiativeTable actors={actors}
+                                     setOrder={this.setOrder}
+                                     socket={this.props.socket} />
                 );
             }else{
                 return(
@@ -68,11 +107,8 @@ class CombatPage extends Component{
                 <div>
                     <p>You are on the Combat page with these actors</p>
                     <ul>
-                        {this.state.characters.map( (character, i) => {
-                                return (<li key={i}>{character.name}</li> )
-                            })}
-                        {this.state.monsters.map( (monster, i) => {
-                                return (<li key={i}>{monster.name}</li> )
+                        {this.state.actors.map( (actor, i) => {
+                                return (<li key={i}>{actor.name}</li> )
                             })}
                     </ul>
                 </div>

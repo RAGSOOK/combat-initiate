@@ -83,6 +83,8 @@ io.on('connection', function(socket){
 
   //receives then send list of actors from DM
   socket.on('sendActors', function(data){
+    console.log('monsters sent', data.monsters);
+    console.log('characters sent', data.characters);
     io.in(data.room).emit('setActors', {characters: data.characters,
                                         monsters: data.monsters});
   });
@@ -90,6 +92,11 @@ io.on('connection', function(socket){
   //sets state on session page for inCombat to true
   socket.on('startEncounter', function(data) {
     io.in(data.room).emit('startCombat', data.encounter);
+  });
+
+  //receives and returns the actors in combat in order
+  socket.on('sendOrder', function(data){
+    socket.broadcast.to(data.room).emit('actorOrder', {actors: data.actors});
   });
 
   socket.on('disconnect', () => {
