@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import InitiativeTable from './InitiativeTable/InitiativeTable.js';
 
 class CombatPage extends Component{
     constructor(props){
@@ -7,6 +8,8 @@ class CombatPage extends Component{
         this.state={
             characters: [],
             monsters: [],
+            actors: [],
+            orderSet: false,
         }
 
         this.props.socket.on('setActors', (actors) => this.setActors(actors));
@@ -41,18 +44,46 @@ class CombatPage extends Component{
         });
     }
 
+    setActorOrder = () => {
+
+    }
+
+    DmSetsOrder = () => {
+        //if order isn't set, DM will do so
+        if(this.state.orderSet === false){
+            if(this.props.isDM){
+                return(
+                    <InitiativeTable characters={this.state.characters}
+                                     monsters={this.state.monsters}
+                                     setActorOrder={this.setActorOrder}/>
+                );
+            }else{
+                return(
+                    <p>The DM is determining turn order</p>
+                );
+            }
+
+        }else{
+            return(
+                <div>
+                    <p>You are on the Combat page with these actors</p>
+                    <ul>
+                        {this.state.characters.map( (character, i) => {
+                                return (<li key={i}>{character.name}</li> )
+                            })}
+                        {this.state.monsters.map( (monster, i) => {
+                                return (<li key={i}>{monster.name}</li> )
+                            })}
+                    </ul>
+                </div>
+            );
+        }
+    }
+
     render(){
         return(
             <div>
-                <p>You are on the Combat page with these actors</p>
-                <ul>
-                    {this.state.characters.map( (character, i) => {
-                            return (<li key={i}>{character.name}</li> )
-                        })}
-                    {this.state.monsters.map( (monster, i) => {
-                            return (<li key={i}>{monster.name}</li> )
-                        })}
-                </ul>
+                {this.DmSetsOrder()}
             </div>
         );
     }
