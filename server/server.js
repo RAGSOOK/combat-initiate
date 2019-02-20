@@ -78,7 +78,7 @@ io.on('connection', function(socket){
 
   //each re-submitted character is emitted back
   socket.on('polledChar', function(data){
-    socket.broadcast.to(data.room).emit('prevChars', {character: data.character.name});
+    socket.broadcast.to(data.room).emit('prevChars', {character: data.character});
   });
 
   //receives then send list of actors from DM

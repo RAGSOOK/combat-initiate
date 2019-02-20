@@ -47,7 +47,7 @@ class CombatPage extends Component{
                 <p>You are on the Combat page with these actors</p>
                 <ul>
                     {this.state.characters.map( (character, i) => {
-                            return (<li key={i}>{character}</li> )
+                            return (<li key={i}>{character.name}</li> )
                         })}
                     {this.state.monsters.map( (monster, i) => {
                             return (<li key={i}>{monster.name}</li> )

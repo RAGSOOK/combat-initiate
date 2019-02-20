@@ -13,7 +13,7 @@ class SessionPage extends Component{
     constructor(props){
         super(props);
         this.state= {
-                     character: '',
+                     character: {},
                      characters: [],
                      inCombat: false,
                      encounters: [],
@@ -37,7 +37,7 @@ class SessionPage extends Component{
             socket.emit('pollRoom', {room: roomId});
         // else you are  player
         } else {
-            const character = this.props.reduxStore.characterReducer.sessionCharacter.name;
+            const character = this.props.reduxStore.characterReducer.sessionCharacter;
             const characters = [...this.state.characters, character]
             socket.emit('room', {room: roomId,
                                 character: character});
@@ -75,7 +75,7 @@ class SessionPage extends Component{
     }
 
     removeCharacter = (removeCharacter) => {
-        const newCharacters= this.state.characters.filter( (character) => removeCharacter !== character);
+        const newCharacters= this.state.characters.filter( (character) => removeCharacter !== character.name);
         this.setState({
             characters: newCharacters,
         });
