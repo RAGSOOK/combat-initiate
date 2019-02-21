@@ -8,12 +8,12 @@ class InitiativeTableItem extends Component {
 
     componentDidMount = () => {
         console.log('actor on table item', this.props.actor);
+        console.log('i of table item in mount', this.props.index);
     }
 
     handleChange = (event) => {
         // this.setState({ [event.target.name]: event.target.value });
-        this.props.setInit(this.props.actor, event.target.value, this.props.key);
-        console.log(event.target.value);
+        this.props.setInit(this.props.actor, event.target.value, this.props.index);
     }
 
     render() {

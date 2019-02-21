@@ -34,6 +34,7 @@ class InitiativeTable extends Component{
     }
 
     setInit = (actor, init, i) => {
+        console.log('i in setInit',i);
         const changeActors = this.state.newActors;
         changeActors.splice(i, 1, {name: actor.name, initiative: init});
         this.setState({newActors: changeActors});
@@ -41,7 +42,7 @@ class InitiativeTable extends Component{
     }
 
     sendSetOrder = () => {
-        console.log()
+        console.log('');
         this.props.setOrder(this.state.newActors)
     }
     
@@ -55,7 +56,9 @@ class InitiativeTable extends Component{
                     </thead>
                     <tbody>
                         {this.state.actors.map((actor, i) => {
+                                console.log('i is',i);
                                 return (<InitiativeTableItem key={i} 
+                                                            index={i}
                                                             actor={actor}
                                                             setInit={this.setInit}
                                                             socket={this.props.socket} />);
