@@ -11,8 +11,9 @@ class InitiativeTableItem extends Component {
     }
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-        this.props.setInit(this.props.actor, this.state.init, this.props.i);
+        // this.setState({ [event.target.name]: event.target.value });
+        this.props.setInit(this.props.actor, event.target.value, this.props.key);
+        console.log(event.target.value);
     }
 
     render() {

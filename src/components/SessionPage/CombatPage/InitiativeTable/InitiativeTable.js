@@ -4,13 +4,18 @@ import InitiativeTableItem from './InitiativeTableItem.js';
 class InitiativeTable extends Component{
     constructor(props){
         super(props);
-        this.state={actors: []}
-
+        this.state={actors: [],
+                    newActors: []}
     }
 
     componentDidMount = () => {
-        this.setState({actors: this.props.actors});
-        console.log('actors array: from Table', this.props.actors);
+        const newActors = this.props.actors;
+
+        newActors.forEach(function(element) { element.initiative = 0; });
+
+        this.setState({actors: this.props.actors,
+                       newActors: newActors});
+        console.log('actors array: from Table', this.state);
     }
 
     componentDidUpdate = (prevProps, prevState) => {
@@ -18,19 +23,26 @@ class InitiativeTable extends Component{
         const actors = this.props.actors;
         //check if props are different
         if (actors.length !== 0 && prevActors !== actors){
-            this.props.socket.emit('sendActors', {actors: this.props.actors});
+            const newActors = this.props.actors;
+
+            newActors.forEach(function(element) { element.initiative = 0; });
+
+            this.setState({actors: this.props.actors,
+                           newActors: newActors});
+            console.log('actors array: from Table', this.state);
         }
-        console.log('actors array: from Table', this.props.actors);
     }
 
     setInit = (actor, init, i) => {
-        const newActors = this.state.actors;
-        newActors.splice(i, 1, {name: actor.name, initiative: init});
-        this.setState({actors: newActors});
+        const changeActors = this.state.newActors;
+        changeActors.splice(i, 1, {name: actor.name, initiative: init});
+        this.setState({newActors: changeActors});
+        console.log('state in init table',this.state);
     }
 
     sendSetOrder = () => {
-        this.props.setOrder(this.state.actors)
+        console.log()
+        this.props.setOrder(this.state.newActors)
     }
     
     render(){

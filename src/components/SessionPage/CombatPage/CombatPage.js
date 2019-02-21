@@ -18,6 +18,7 @@ class CombatPage extends Component{
 
     componentDidMount = () => {
         if(this.props.isDM){
+            console.log('I am a DM');
             this.props.socket.emit('sendActors', {room: this.props.roomId,
                                                   characters: this.props.characters,
                                                   monsters: this.props.reduxStore.monsterReducer.sessionMonsters});
@@ -35,9 +36,9 @@ class CombatPage extends Component{
                 this.props.socket.emit('sendActors', {room: this.props.roomId,
                                                     characters: this.props.characters,
                                                     monsters: this.props.reduxStore.monsterReducer.sessionMonsters});
+                console.log('component did update state:', this.state);
             }
         }
-        console.log('component did update state:', this.state);
     }
 
     setActors = (actors) => {
@@ -60,12 +61,12 @@ class CombatPage extends Component{
 
     setOrder = (actors) => {
         console.log('CCAAAAALLLLL!EEEEDDDD');
-        this.setState({...this.state,
-                       actors: actors});
         this.props.socket.emit('sendOrder', {room: this.props.roomId,
                                              actors: actors});
         this.setState({...this.state,
+                       actors: actors,
                        orderSet: 'true'});
+
         console.log('setOrder state:', this.state);
     }
 
