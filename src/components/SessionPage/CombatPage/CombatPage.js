@@ -60,7 +60,19 @@ class CombatPage extends Component{
     }
 
     setOrder = (actors) => {
-        console.log('CCAAAAALLLLL!EEEEDDDD');
+        let orderedActors = actors;
+
+        //sort the actors by initiative
+        for (let i = 0; i < orderedActors.length; i++) { 
+            for (var j = 0; j < (orderedActors.length - i - 1); j++) { 
+                if(orderedActors[j].initiative < orderedActors[j+1].initiative) {
+                    let tmp = orderedActors[j];
+                    orderedActors[j] = orderedActors[j+1];
+                    orderedActors[j+1] = tmp;
+                }
+            }        
+        }
+
         this.props.socket.emit('sendOrder', {room: this.props.roomId,
                                              actors: actors});
         this.setState({...this.state,
