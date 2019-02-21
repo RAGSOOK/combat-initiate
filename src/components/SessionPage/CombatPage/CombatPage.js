@@ -53,7 +53,7 @@ class CombatPage extends Component{
     setActorsOrder = (actors) => {
         this.setState({
             ...this.state,
-            actors: actors,
+            actors: actors.actors,
             orderSet: 'true',
         });
         console.log('setActorOrder state:', this.state);
