@@ -94,6 +94,10 @@ io.on('connection', function(socket){
     io.in(data.room).emit('startCombat', data.encounter);
   });
 
+  socket.on('nextTurn', function(data) {
+    io.in(data.room).emit('updateOrder', data.actors);
+  });
+
   //receives and returns the actors in combat in order
   socket.on('sendOrder', function(data){
     socket.broadcast.to(data.room).emit('actorOrder', {actors: data.actors});

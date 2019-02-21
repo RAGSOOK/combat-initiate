@@ -14,6 +14,7 @@ class CombatPage extends Component{
 
         this.props.socket.on('setActors', (actors) => this.setActors(actors));
         this.props.socket.on('actorOrder', (actors) => this.setActorsOrder(actors));
+        this.props.socket.on('updateOrder', (actors) => this.updateOrder(actors));
     }
 
     componentDidMount = () => {
@@ -120,13 +121,41 @@ class CombatPage extends Component{
                 <div>
                     <p>You are on the Combat page with these actors</p>
                     <ul>
-                        {this.state.actors.map( (actor, i) => {
+                        { (this.state.actors !== undefined) && 
+                            this.state.actors.map( (actor, i) => {
                                 return (<li key={i}>{actor.name}</li> )
                             })}
                     </ul>
+                    {this.nextButton()}
                 </div>
             );
         }
+    }
+
+    nextButton = () => {
+        if(this.props.isDM){
+            return(
+                <button onClick={this.nextTurn}>Next Turn</button>
+            );
+        }
+    }
+
+    nextTurn = () => {
+        let newActors = this.state.actors;
+        newActors.push(newActors[0]);
+        newActors.shift();
+        this.props.socket.emit('nextTurn',{room: this.props.roomId,
+                                           actors: newActors});
+    }
+
+    updateOrder = (actors) => {
+        console.log('turn order updated');
+
+        this.setState({
+            ...this.state,
+            actors: actors,
+        });
+        console.log('turn order updated');
     }
 
     render(){
