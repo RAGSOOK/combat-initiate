@@ -89,7 +89,6 @@ router.post('/', (req, res) => {
 // UPDATES 
 // Takes in form data and replaces all monster info with new monsters
 router.put('/:id', (req, res) => {
-    console.log('in post encounter edits');
     if(req.isAuthenticated()){
         (async () => {
             const client = await pool.connect();
