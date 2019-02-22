@@ -41,16 +41,44 @@ router.get('/:id', (req, res) => {
 });
 
 // POST
-// INSERTS new character for user
+// INSERTS new encounter for user with monsters
 router.post('/', (req, res) => {
     if(req.isAuthenticated()){
-        const queryText = `INSERT INTO encounters ("name", "user_id")
-                           VALUES ($1, $2);`;
-        pool.query(queryText, [req.body.name, req.user.id])
-        .then((result) => {
-            res.sendStatus(201);
-        }).catch((error) => {
-            console.log('Error in post encounter', error);
+        (async () => {
+            const client = await pool.connect();
+            try{
+                await client.query('BEGIN');
+
+                let queryText = `INSERT INTO encounters ("name", "user_id")
+                                VALUES ($1, $2)
+                                RETURNING "id";`;
+                const encResult = await client.query(queryText, [req.body.name, req.user.id]);
+
+                const encId = encResult.rows[0].id;
+                let monsterId;
+
+                //loop through players and add each to the junction table with this campaign
+                for(let monster of req.body.monstersIdsToAdd){
+                    monsterId = monster.id;
+
+                    queryText = `INSERT INTO "encounters_monsters" ("monster_id", "encounter_id")
+                                VALUES ($1, $2);`;
+                    await client.query(queryText, [monsterId, encId]);
+                }
+
+                await client.query('COMMIT');
+                res.sendStatus(200);
+
+            }catch(error){
+                res.sendStatus(403);
+                console.log('Rollback', error);
+                await client.query('ROLLBACK');
+                throw error;
+            }finally {
+                client.release();
+            }
+        })().catch((error) => {
+            console.log('CATCH', error);
             res.sendStatus(500);
         });
     }else{
