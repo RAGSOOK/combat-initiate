@@ -105,11 +105,13 @@ class EncounterSpecs extends Component{
         });
     };
 
-    handleMonsterChange = (i, event, name) => {
+    handleMonsterChange = (i, event) => {
+        console.log(event.target);
+        console.log(this.state.monsters[i].name);
         const newMonsters = this.state.monsters.map((monster, j) => {
           if (i !== j) return monster;
           return {id: event.target.value,
-                  name: name};
+                  name: this.state.monsters[i].name};
         });
         const addMonsterIds = this.state.monstersIdsToAdd.map((monster, j) => {
             if (i !== j) return monster;
@@ -130,7 +132,7 @@ class EncounterSpecs extends Component{
 
                 {this.state.monsters.map((monster, i) => (
                     <div>
-                        <select onChange={this.handleMonsterChange.bind(this, i, monster.name)} 
+                        <select onChange={this.handleMonsterChange.bind(this, i)} 
                             value={this.state.monsters[i].id||''}>
                             <option value={''}>Select Monster</option>
                             {this.props.reduxStore.monsterReducer.myMonsters.map((monsterChoice) => 
