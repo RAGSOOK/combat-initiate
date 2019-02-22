@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 //gets monsters for encounter id = :id
 router.get('/:id', (req, res) => {
     if(req.isAuthenticated()){
-        const queryText = `SELECT "name", "quantity" FROM monsters
+        const queryText = `SELECT * FROM monsters
                            JOIN encounters_monsters 
                            ON encounters_monsters.monster_id = monsters.id
                            WHERE encounters_monsters.encounter_id = $1;`;

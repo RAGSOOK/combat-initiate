@@ -40,6 +40,10 @@ class EncounterTableItem extends Component {
             payload: this.props.encounter,
             }
         this.props.dispatch(action);
+        const nextAction = {type: 'EDIT_ENCOUNTER_MONSTERS',
+                            payload: this.props.encounter,
+                           }
+        this.props.dispatch(nextAction);
 
         this.props.history.push('/edit-encounter');
     }

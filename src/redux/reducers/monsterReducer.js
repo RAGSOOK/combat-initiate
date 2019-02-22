@@ -27,8 +27,18 @@ const sessionMonsters = (state=[], action) => {
   }
 }
 
+const setEditingMonsters = (state=[], action) => {
+  switch(action.type){
+    case 'SET_EDITING_MONSTERS':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
   export default combineReducers({
     editMonster,
     myMonsters,
     sessionMonsters,
+    setEditingMonsters,
   });

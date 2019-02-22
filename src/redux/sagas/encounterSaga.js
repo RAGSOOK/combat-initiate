@@ -36,13 +36,29 @@ function* createEncounter(action) {
 function* editEncounter(action){
   try{
     yield axios.put(`api/encounter/${action.payload.id}`, action.payload);
+    const responseMons = yield axios.get(`api/monster/${action.payload.id}`);
 
-    const nextAction = { type: 'FETCH_ENCOUNTERS' };
-    yield put(nextAction);
+
+    const encAction = { type: 'FETCH_ENCOUNTERS' };
+    const monsAction = { type: 'SET_EDITING_MONSTERS', payload: responseMons.data };
+    yield put(encAction);
+    yield put(monsAction);
   }catch (error){
     console.log('There is error in PUT Edit Encounter', error);
   }
 }
+
+function* editMonstersFromEncounter(action){
+  try{
+    const responseMons = yield axios.get(`api/monster/${action.payload.id}`);
+
+    const monsAction = { type: 'SET_EDITING_MONSTERS', payload: responseMons.data };
+    yield put(monsAction);
+  }catch (error){
+    console.log('There is error in GET Edit Encounter monsters', error);
+  }
+}
+
 
 function* deleteEncounter(action){
   try{
@@ -61,6 +77,7 @@ function* encounterSaga() {
   yield takeEvery('EDIT_ENCOUNTER', editEncounter);
   yield takeEvery('DELETE_ENCOUNTER', deleteEncounter);
   yield takeEvery('FETCH_CAMPAIGN_ENCOUNTERS', fetchCampaignEncounters);
+  yield takeEvery('EDIT_ENCOUNTER_MONSTERS', editMonstersFromEncounter);
 }
 
 export default encounterSaga;
