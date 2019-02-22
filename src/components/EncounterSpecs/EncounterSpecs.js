@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+//There is weird behavior on this page but it is working fine
+//be very certain before makiong changes
 class EncounterSpecs extends Component{
     constructor(props){
         super(props);
