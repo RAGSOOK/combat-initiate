@@ -67,7 +67,7 @@ class EncounterSpecs extends Component{
         if(this.props.location.pathname === '/edit-encounter'){
             const action = {type: 'EDIT_ENCOUNTER',
                             payload: {newName: this.state.name,
-                                      newMonsters: this.state.monsters,
+                                      newMonsters: this.state.monstersIdsToAdd,
                                       encId: this.props.reduxStore.encountersReducers.editEncounter.id,
                                       userId: this.props.reduxStore.encountersReducers.editEncounter.user_id,
                                     }
@@ -101,9 +101,12 @@ class EncounterSpecs extends Component{
     
     handleRemoveMonster = (i) => {
         const newMonsters = this.state.monsters.filter( (monster, j) => i !== j);
+        const newMonstersIds = this.state.monstersIdsToAdd.filter( (monster, j) => i !== j);
+
         this.setState({
             ...this.state,
             monsters: newMonsters,
+            monstersIdsToAdd: newMonstersIds,
         });
     };
 
@@ -130,7 +133,7 @@ class EncounterSpecs extends Component{
             <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} type='text' 
                     value={this.state.name||''} placeholder='Encounter Name' name='name'/> 
-                                <h4>Players</h4>
+                                <h4>Monsters</h4>
 
                 {this.state.monsters.map((monster, i) => (
                     <div>

@@ -59,9 +59,7 @@ router.post('/', (req, res) => {
 });
 
 // UPDATES 
-// Takes in form data and replaces all character info with new info
-// Accessable by player only
-// this is using async because I may need it later.
+// Takes in form data and replaces all monster info with new monsters
 router.put('/:id', (req, res) => {
     console.log('in post encounter edits');
     if(req.isAuthenticated()){
@@ -78,6 +76,20 @@ router.put('/:id', (req, res) => {
                     queryText = `UPDATE encounters SET name = $1
                                  WHERE "id" = $2;`;
                     await client.query(queryText, [req.body.newName, req.body.encId]);
+
+                    queryText = `DELETE FROM encounters_monsters
+                                 WHERE encounter_id = $1;`;
+                    await client.query(queryText, [req.body.encId]);
+
+                    console.log(req.body.newMonsters);
+                    for(let monster of req.body.newMonsters){
+                        console.log(monster);
+                        let id = parseInt(monster.id);
+                        console.log(id);
+                        queryText = `INSERT INTO "encounters_monsters" ("monster_id", "encounter_id")
+                                    VALUES ($1, $2);`;
+                        await client.query(queryText, [id, req.body.encId]);
+                    }
 
                     await client.query('COMMIT');
                     res.sendStatus(200);

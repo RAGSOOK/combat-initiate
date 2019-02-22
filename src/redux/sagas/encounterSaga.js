@@ -35,14 +35,10 @@ function* createEncounter(action) {
 
 function* editEncounter(action){
   try{
-    yield axios.put(`api/encounter/${action.payload.id}`, action.payload);
-    const responseMons = yield axios.get(`api/monster/${action.payload.id}`);
+    yield axios.put(`api/encounter/${action.payload.encId}`, action.payload);
 
-
-    const encAction = { type: 'FETCH_ENCOUNTERS' };
-    const monsAction = { type: 'SET_EDITING_MONSTERS', payload: responseMons.data };
-    yield put(encAction);
-    yield put(monsAction);
+    const Action = { type: 'FETCH_ENCOUNTERS' };
+    yield put(Action);
   }catch (error){
     console.log('There is error in PUT Edit Encounter', error);
   }
