@@ -9,6 +9,8 @@ const CurrentPlayers = (state=[], action) => {
   }
 }
 
+export {CurrentPlayers}
+
   export default combineReducers({
     CurrentPlayers,
   });
